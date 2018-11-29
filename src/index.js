@@ -1,4 +1,4 @@
-import style from "./main.css";
+import "./main.css";
 import button from "./button.js";
 import playSequence from "./sequence.js";
 
@@ -57,8 +57,6 @@ export const buttons = {
     gold: button("gold"),
     red: button("red")
 };
-
-console.log(button.prototype);
 
 function updateScore() {
     score.innerText = String(state.score).padStart(3, "0");
