@@ -1,6 +1,7 @@
 import "./main.css";
 import button from "./button.js";
 import playSequence from "./sequence.js";
+import endGame from "./endgame.js";
 
 export const state = {
     score: 0,
@@ -16,6 +17,13 @@ export const state = {
         this.sequence = [];
         this.userInput = [];
         this.gameState = "stopped";
+        if (this.lives <= 0) {
+            endGame(this.score);
+            this.score = 0;
+            this.lives = 3;
+            updateScore();
+            updateLives();
+        }
     },
     oneUp: function oneUp() {
         this.score += this.seqLength;
@@ -66,14 +74,14 @@ function updateLives() {
     lives.innerText = String(state.lives);
 }
 
-const startGame = function() {
-    startButton.addEventListener("click", function() {
-        if (state.gameState === "stopped") {
-            state.gameState = "start";
-            playSequence();
-        }
-    });
-};
+function startGame() {
+    if (state.gameState === "stopped") {
+        state.gameState = "start";
+        playSequence();
+    }
+}
+
+startButton.addEventListener("click", startGame);
 
 buttonsDiv.addEventListener("click", function(e) {
     if (e.target && e.target.classList.contains("button")) {
@@ -89,5 +97,3 @@ buttonsDiv.addEventListener("click", function(e) {
         }
     }
 });
-
-startGame();
