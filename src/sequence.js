@@ -7,6 +7,8 @@ import { state } from "./index.js";
 import { buttons } from "./button.js";
 
 const colors = ["blue", "green", "gold", "red"];
+let start = null;
+let count = 0;
 
 function rand() {
     return Math.floor(Math.random() * 4);
@@ -21,22 +23,23 @@ function clickSimulator(el) {
     }, 300);
 }
 
-function timeItRight(j, time) {
-    setTimeout(() => {
-        clickSimulator(colors[j]);
-        if (state.sequence.length === state.seqLength) {
-            state.gameState = "user-input";
-        }
-    }, time);
-}
+function playSequence(timestamp) {
+    if (!start) start = timestamp;
+    let progress = timestamp - start;
 
-function playSequence() {
-    let time = 1000;
-    for (let i = 0; i < state.seqLength; i += 1) {
-        let j = rand();
-        timeItRight(j, time);
-        time += 500;
+    if (progress > 500) {
+        progress = 0;
+        start = timestamp;
+        count += 1;
+        clickSimulator(colors[rand()]);
     }
+    if (count >= state.seqLength) {
+        start = null;
+        count = 0;
+        state.gameState = "user-input";
+        return;
+    }
+    requestAnimationFrame(playSequence);
 }
 
 export default playSequence;
