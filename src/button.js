@@ -1,9 +1,18 @@
+import { loseALife, oneUp } from "./index.js";
+
 const button = function(color) {
     let node = document.querySelector(`.${color}`);
     const obj = Object.create(button.prototype);
     obj.color = color;
     obj.node = node;
     return obj;
+};
+
+export const buttons = {
+    blue: button("blue"),
+    green: button("green"),
+    gold: button("gold"),
+    red: button("red")
 };
 
 const scorePanel = document.querySelector(".score-panel");
@@ -34,13 +43,13 @@ button.prototype.check = function(i, state) {
         rightOne();
         if (state.userInput.length === state.sequence.length) {
             celebrate();
-            state.oneUp();
+            oneUp();
         } else {
             return;
         }
     } else {
         wrongOne();
-        state.loseALife();
+        loseALife();
     }
 };
 

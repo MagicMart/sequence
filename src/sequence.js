@@ -3,7 +3,8 @@
 // The button of the same name flashes on the screen.
 // Thus a sequence is generated and displayed.
 
-import { state, buttons } from "./index.js";
+import { state } from "./index.js";
+import { buttons } from "./button.js";
 
 const colors = ["blue", "green", "gold", "red"];
 
@@ -11,7 +12,7 @@ function rand() {
     return Math.floor(Math.random() * 4);
 }
 
-function clicker(el) {
+function clickSimulator(el) {
     state.sequence.push(el);
     let orginalColor = el;
     buttons[el].node.style.backgroundColor = "white";
@@ -20,9 +21,9 @@ function clicker(el) {
     }, 300);
 }
 
-function myTimeout(j, time) {
+function timeItRight(j, time) {
     setTimeout(() => {
-        clicker(colors[j]);
+        clickSimulator(colors[j]);
         if (state.sequence.length === state.seqLength) {
             state.gameState = "user-input";
         }
@@ -33,7 +34,7 @@ function playSequence() {
     let time = 1000;
     for (let i = 0; i < state.seqLength; i += 1) {
         let j = rand();
-        myTimeout(j, time);
+        timeItRight(j, time);
         time += 500;
     }
 }

@@ -9,62 +9,13 @@ export const state = {
     seqLength: 3,
     sequence: [],
     userInput: [],
-    gameState: "stopped",
-    loseALife: function loseALife() {
-        this.seqLength = 3;
-        this.lives -= 1;
-        updateLives();
-        this.sequence = [];
-        this.userInput = [];
-        this.gameState = "stopped";
-        if (this.lives <= 0) {
-            endGame(this.score);
-            this.score = 0;
-            this.lives = 3;
-            updateScore();
-            updateLives();
-        }
-    },
-    oneUp: function oneUp() {
-        this.score += this.seqLength;
-        updateScore();
-        this.seqLength += 1;
-        this.sequence = [];
-        this.userInput = [];
-        playSequence();
-    }
+    gameState: "stopped"
 };
-
-// export const stateMethods = {
-//     loseALife: function loseALife() {
-//         state.seqLength = 3;
-//         state.lives -= 1;
-//         updateLives();
-//         state.sequence = [];
-//         state.userInput = [];
-//         state.gameState = "stopped";
-//     },
-//     oneUp: function oneUp() {
-//         state.score += this.seqLength;
-//         updateScore();
-//         state.seqLength += 1;
-//         state.sequence = [];
-//         this.userInput = [];
-//         playSequence();
-//     }
-// };
 
 const score = document.querySelector(".score");
 const lives = document.querySelector(".lives");
 const startButton = document.querySelector(".start");
 const buttonsDiv = document.getElementById("buttons");
-
-export const buttons = {
-    blue: button("blue"),
-    green: button("green"),
-    gold: button("gold"),
-    red: button("red")
-};
 
 function updateScore() {
     score.innerText = String(state.score).padStart(3, "0");
@@ -72,6 +23,31 @@ function updateScore() {
 
 function updateLives() {
     lives.innerText = String(state.lives);
+}
+
+export function oneUp() {
+    state.score += state.seqLength;
+    updateScore();
+    state.seqLength += 1;
+    state.sequence = [];
+    state.userInput = [];
+    playSequence();
+}
+
+export function loseALife() {
+    state.seqLength = 3;
+    state.lives -= 1;
+    updateLives();
+    state.sequence = [];
+    state.userInput = [];
+    state.gameState = "stopped";
+    if (state.lives <= 0) {
+        endGame(state.score);
+        state.score = 0;
+        state.lives = 3;
+        updateScore();
+        updateLives();
+    }
 }
 
 function startGame() {
