@@ -47,9 +47,6 @@ button.prototype.check = function(i, state) {
             state.gameState = "no-input";
             celebrate();
             oneUp();
-            setTimeout(() => {
-                state.gameState = "user-input";
-            }, 100);
         } else {
             return;
         }

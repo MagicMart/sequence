@@ -24,6 +24,7 @@ function clickSimulator(el) {
 
 function playSequence(timestamp) {
     if (!start) {
+        state.gameState = "no-input";
         startButton.style.visibility = "hidden";
         start = timestamp;
     }
@@ -40,7 +41,7 @@ function playSequence(timestamp) {
         count = 0;
         setTimeout(() => {
             state.gameState = "user-input";
-        }, 300);
+        }, 500);
         return;
     }
     requestAnimationFrame(playSequence);
