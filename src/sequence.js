@@ -15,7 +15,7 @@ function rand() {
 
 function clickSimulator(el) {
     state.sequence.push(el);
-    let orginalColor = el;
+    let orginalColor = buttons[el].color;
     buttons[el].node.style.backgroundColor = "white";
     setTimeout(() => {
         buttons[el].node.style.backgroundColor = orginalColor;
