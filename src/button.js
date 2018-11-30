@@ -53,7 +53,9 @@ button.prototype.check = function(i, state) {
     } else {
         state.gameState = "no-input";
         wrongOne();
-        loseALife();
+        setTimeout(() => {
+            loseALife();
+        }, 400);
     }
 };
 

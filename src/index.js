@@ -61,7 +61,7 @@ function startGame() {
 function changeButtonColour(e) {
     if (e.target && e.target.classList.contains("button")) {
         if (state.gameState === "user-input") {
-            let orgColor = e.target.style.backgroundColor;
+            let orgColor = e.target.classList[1];
             e.target.style.backgroundColor = "white";
             setTimeout(() => {
                 e.target.style.backgroundColor = orgColor;
