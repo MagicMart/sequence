@@ -1,7 +1,5 @@
 // A random colour is chosen from the colors array.
 // It is pushed to the sequence array.
-// The button of the same name flashes on the screen.
-// Thus a sequence is generated and displayed.
 
 import { state } from "./index.js";
 import { buttons } from "./button.js";
@@ -36,7 +34,9 @@ function playSequence(timestamp) {
     if (count >= state.seqLength) {
         start = null;
         count = 0;
-        state.gameState = "user-input";
+        setTimeout(() => {
+            state.gameState = "user-input";
+        }, 300);
         return;
     }
     requestAnimationFrame(playSequence);

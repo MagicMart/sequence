@@ -42,12 +42,15 @@ button.prototype.check = function(i, state) {
     if (state.userInput[i] === state.sequence[i]) {
         rightOne();
         if (state.userInput.length === state.sequence.length) {
+            state.gameState = "no-input";
             celebrate();
             oneUp();
+            state.gameState = "user-input";
         } else {
             return;
         }
     } else {
+        state.gameState = "no-input";
         wrongOne();
         loseALife();
     }

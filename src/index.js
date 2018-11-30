@@ -9,7 +9,7 @@ export const state = {
     seqLength: 3,
     sequence: [],
     userInput: [],
-    gameState: "stopped"
+    gameState: "waiting"
 };
 
 const score = document.querySelector(".score");
@@ -40,7 +40,7 @@ export function loseALife() {
     updateLives();
     state.sequence = [];
     state.userInput = [];
-    state.gameState = "stopped";
+    state.gameState = "waiting";
     if (state.lives <= 0) {
         endGame(state.score);
         state.score = 0;
@@ -51,15 +51,13 @@ export function loseALife() {
 }
 
 function startGame() {
-    if (state.gameState === "stopped") {
-        state.gameState = "start";
+    if (state.gameState === "waiting") {
+        // state.gameState = "start";
         playSequence();
     }
 }
 
-startButton.addEventListener("click", startGame);
-
-buttonsDiv.addEventListener("click", function(e) {
+function changeButtonColour(e) {
     if (e.target && e.target.classList.contains("button")) {
         if (state.gameState === "user-input") {
             let orgColor = e.target.style.backgroundColor;
@@ -72,4 +70,8 @@ buttonsDiv.addEventListener("click", function(e) {
             button.prototype.check(state.userInput.length - 1, state);
         }
     }
-});
+}
+
+startButton.addEventListener("click", startGame);
+
+buttonsDiv.addEventListener("click", e => changeButtonColour(e));
