@@ -16,11 +16,13 @@ export const buttons = {
 };
 
 const scorePanel = document.querySelector(".score-panel");
+const startButton = document.querySelector(".start");
 
 function wrongOne() {
     document.body.style.backgroundColor = "red";
     setTimeout(() => {
         document.body.style.backgroundColor = "white";
+        startButton.style.visibility = "visible";
     }, 300);
 }
 
@@ -45,7 +47,9 @@ button.prototype.check = function(i, state) {
             state.gameState = "no-input";
             celebrate();
             oneUp();
-            state.gameState = "user-input";
+            setTimeout(() => {
+                state.gameState = "user-input";
+            }, 100);
         } else {
             return;
         }

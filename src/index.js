@@ -31,7 +31,9 @@ export function oneUp() {
     state.seqLength += 1;
     state.sequence = [];
     state.userInput = [];
-    playSequence();
+    setTimeout(() => {
+        playSequence();
+    }, 500);
 }
 
 export function loseALife() {
@@ -52,7 +54,6 @@ export function loseALife() {
 
 function startGame() {
     if (state.gameState === "waiting") {
-        // state.gameState = "start";
         playSequence();
     }
 }
