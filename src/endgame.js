@@ -1,7 +1,8 @@
 const id01 = document.getElementById("id01");
 const modalScore = document.getElementById("modal-score");
+const modalContent = document.querySelector(".w3-modal-content");
 
-id01.addEventListener("click", function modalGone() {
+modalContent.addEventListener("click", function modalGone() {
     id01.style.display = "none";
 });
 
