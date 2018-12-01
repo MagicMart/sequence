@@ -1,9 +1,8 @@
 const id01 = document.getElementById("id01");
 const modalScore = document.getElementById("modal-score");
-const modalX = document.getElementById("id01");
 
-modalX.addEventListener("click", function modalGone() {
-    modalX.style.display = "none";
+id01.addEventListener("click", function modalGone() {
+    id01.style.display = "none";
 });
 
 const endGame = function(score) {
