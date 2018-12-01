@@ -23,7 +23,7 @@ function wrongOne() {
     setTimeout(() => {
         document.body.style.backgroundColor = "white";
         startButton.style.visibility = "visible";
-    }, 300);
+    }, 100);
 }
 
 function rightOne() {
@@ -53,9 +53,7 @@ button.prototype.check = function(i, state) {
     } else {
         state.gameState = "no-input";
         wrongOne();
-        setTimeout(() => {
-            loseALife();
-        }, 400);
+        loseALife();
     }
 };
 

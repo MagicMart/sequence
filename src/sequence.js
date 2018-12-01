@@ -15,7 +15,7 @@ function rand() {
 
 function clickSimulator(el) {
     state.sequence.push(el);
-    let orginalColor = buttons[el].color;
+    let orginalColor = el;
     buttons[el].node.style.backgroundColor = "white";
     setTimeout(() => {
         buttons[el].node.style.backgroundColor = orginalColor;
@@ -41,7 +41,8 @@ function playSequence(timestamp) {
         count = 0;
         setTimeout(() => {
             state.gameState = "user-input";
-        }, 500);
+        }, 300);
+
         return;
     }
     requestAnimationFrame(playSequence);
