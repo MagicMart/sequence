@@ -76,3 +76,7 @@ header {
     margin: auto 0;
     background: rgb(37, 192, 37);
 }
+
+.w3-display-topright {
+    background: rgb(206, 22, 22);
+}
