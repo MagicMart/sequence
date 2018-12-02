@@ -31,7 +31,7 @@ header {
 
 .score-panel {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     font-family: monospace;
     font-size: large;
     font-weight: 700;
@@ -45,7 +45,7 @@ header {
 
 .row {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     width: 100%;
 }
 
@@ -75,5 +75,9 @@ header {
     height: 48px;
     margin: auto 0;
     background: rgb(37, 192, 37);
+}
+
+.w3-display-topright {
+    background: rgb(206, 22, 22);
 }
 

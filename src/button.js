@@ -57,4 +57,4 @@ button.prototype.check = function(i, state) {
     }
 };
 
-export default button;
+export default Object.freeze(button);
