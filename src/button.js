@@ -1,4 +1,4 @@
-import { loseALife, oneUp } from "./index.js";
+import { state, loseALife, oneUp } from "./index.js";
 
 const button = function(color) {
     let node = document.querySelector(`.${color}`);
@@ -17,6 +17,7 @@ export const buttons = {
 
 const scorePanel = document.querySelector(".score-panel");
 const startButton = document.querySelector(".start");
+const buttonsDiv = document.getElementById("buttons");
 
 function wrongOne() {
     document.body.style.backgroundColor = "red";
@@ -57,4 +58,21 @@ button.prototype.check = function(i, state) {
     }
 };
 
-export default Object.freeze(button);
+function changeButtonColour(e) {
+    if (e.target && e.target.classList.contains("button")) {
+        if (state.gameState === "user-input") {
+            let orgColor = e.target.classList[1];
+            e.target.style.backgroundColor = "white";
+            setTimeout(() => {
+                e.target.style.backgroundColor = orgColor;
+            }, 150);
+            state.userInput.push(orgColor);
+
+            button.prototype.check(state.userInput.length - 1, state);
+        }
+    }
+}
+
+buttonsDiv.addEventListener("click", e => changeButtonColour(e));
+
+export default button;

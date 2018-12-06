@@ -1,5 +1,4 @@
 import "./main.css";
-import button from "./button.js";
 import playSequence from "./sequence.js";
 import endGame from "./endgame.js";
 
@@ -15,7 +14,6 @@ export const state = {
 const score = document.querySelector(".score");
 const lives = document.querySelector(".lives");
 const startButton = document.querySelector(".start");
-const buttonsDiv = document.getElementById("buttons");
 
 function updateScore() {
     score.innerText = String(state.score).padStart(3, "0");
@@ -58,21 +56,4 @@ function startGame() {
     }
 }
 
-function changeButtonColour(e) {
-    if (e.target && e.target.classList.contains("button")) {
-        if (state.gameState === "user-input") {
-            let orgColor = e.target.classList[1];
-            e.target.style.backgroundColor = "white";
-            setTimeout(() => {
-                e.target.style.backgroundColor = orgColor;
-            }, 150);
-            state.userInput.push(orgColor);
-
-            button.prototype.check(state.userInput.length - 1, state);
-        }
-    }
-}
-
 startButton.addEventListener("click", startGame);
-
-buttonsDiv.addEventListener("click", e => changeButtonColour(e));
