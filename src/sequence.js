@@ -5,7 +5,6 @@ import { state } from "./index.js";
 import { buttons } from "./button.js";
 
 const colors = ["blue", "green", "gold", "red"];
-const startButton = document.querySelector(".start");
 let start = null;
 let count = 0;
 
@@ -25,7 +24,6 @@ function clickSimulator(el) {
 function playSequence(timestamp = 0) {
     if (!start) {
         state.gameState = "no-input";
-        startButton.style.visibility = "hidden";
         start = 0;
     }
     let progress = timestamp - start;

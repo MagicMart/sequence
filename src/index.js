@@ -51,8 +51,11 @@ export function loseALife() {
 }
 
 function startGame() {
+    startButton.style.visibility = "hidden";
     if (state.gameState === "waiting") {
-        playSequence();
+        setTimeout(() => {
+            playSequence();
+        }, 1000);
     }
 }
 
