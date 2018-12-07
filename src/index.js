@@ -31,7 +31,7 @@ export function oneUp() {
     state.userInput = [];
     setTimeout(() => {
         playSequence();
-    }, 500);
+    }, 1000);
 }
 
 export function loseALife() {

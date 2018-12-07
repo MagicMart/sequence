@@ -22,11 +22,11 @@ function clickSimulator(el) {
     }, 300);
 }
 
-function playSequence(timestamp) {
+function playSequence(timestamp = 0) {
     if (!start) {
         state.gameState = "no-input";
         startButton.style.visibility = "hidden";
-        start = timestamp;
+        start = 0;
     }
     let progress = timestamp - start;
 
