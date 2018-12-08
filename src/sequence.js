@@ -25,14 +25,14 @@ function clickSimulator(el) {
 function playSequence(stateSequenceLength) {
     sequenceLength = stateSequenceLength;
     sequenceArray = [];
-    sequence();
+    requestAnimationFrame(sequence);
     return sequenceArray;
 }
 
-function sequence(timestamp = 0) {
+function sequence(timestamp) {
     if (!start) {
         button.prototype.clickable = false;
-        start = 0;
+        start = timestamp;
     }
     let progress = timestamp - start;
 
