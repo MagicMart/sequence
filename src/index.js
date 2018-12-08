@@ -7,8 +7,7 @@ export const state = {
     lives: 3,
     seqLength: 3,
     sequence: [],
-    userInput: [],
-    gameState: "waiting"
+    userInput: []
 };
 
 const score = document.querySelector(".score");
@@ -30,7 +29,7 @@ export function oneUp() {
     state.sequence = [];
     state.userInput = [];
     setTimeout(() => {
-        playSequence();
+        state.sequence = playSequence(state.seqLength);
     }, 1000);
 }
 
@@ -40,7 +39,6 @@ export function loseALife() {
     updateLives();
     state.sequence = [];
     state.userInput = [];
-    state.gameState = "waiting";
     if (state.lives <= 0) {
         endGame(state.score);
         state.score = 0;
@@ -52,11 +50,9 @@ export function loseALife() {
 
 function startGame() {
     startButton.style.visibility = "hidden";
-    if (state.gameState === "waiting") {
-        setTimeout(() => {
-            playSequence();
-        }, 1000);
-    }
+    setTimeout(() => {
+        state.sequence = playSequence(state.seqLength);
+    }, 1000);
 }
 
 startButton.addEventListener("click", startGame);

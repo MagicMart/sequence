@@ -1,19 +1,20 @@
 // A random colour is chosen from the colors array.
 // It is pushed to the sequence array.
 
-import { state } from "./index.js";
-import { buttons } from "./button.js";
+import button, { buttons } from "./button.js";
 
 const colors = ["blue", "green", "gold", "red"];
 let start = null;
 let count = 0;
+let sequenceLength;
+let sequenceArray;
 
 function rand() {
     return Math.floor(Math.random() * 4);
 }
 
 function clickSimulator(el) {
-    state.sequence.push(el);
+    sequenceArray.push(el);
     let orginalColor = el;
     buttons[el].node.style.backgroundColor = "white";
     setTimeout(() => {
@@ -21,9 +22,16 @@ function clickSimulator(el) {
     }, 300);
 }
 
-function playSequence(timestamp = 0) {
+function playSequence(stateSequenceLength) {
+    sequenceLength = stateSequenceLength;
+    sequenceArray = [];
+    sequence();
+    return sequenceArray;
+}
+
+function sequence(timestamp = 0) {
     if (!start) {
-        state.gameState = "no-input";
+        button.prototype.clickable = false;
         start = 0;
     }
     let progress = timestamp - start;
@@ -34,16 +42,16 @@ function playSequence(timestamp = 0) {
         count += 1;
         clickSimulator(colors[rand()]);
     }
-    if (count >= state.seqLength) {
+    if (count >= sequenceLength) {
         start = null;
         count = 0;
         setTimeout(() => {
-            state.gameState = "user-input";
+            button.prototype.clickable = true;
         }, 300);
 
         return;
     }
-    requestAnimationFrame(playSequence);
+    requestAnimationFrame(sequence);
 }
 
 export default playSequence;

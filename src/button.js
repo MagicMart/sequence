@@ -8,6 +8,25 @@ const button = function(color) {
     return obj;
 };
 
+button.prototype.clickable = false;
+
+button.prototype.check = function(i, state) {
+    if (state.userInput[i] === state.sequence[i]) {
+        rightOne();
+        if (state.userInput.length === state.sequence.length) {
+            button.prototype.clickable = false;
+            celebrate();
+            oneUp();
+        } else {
+            return;
+        }
+    } else {
+        button.prototype.clickable = false;
+        wrongOne();
+        loseALife();
+    }
+};
+
 export const buttons = {
     blue: button("blue"),
     green: button("green"),
@@ -41,26 +60,9 @@ function celebrate() {
     }, 100);
 }
 
-button.prototype.check = function(i, state) {
-    if (state.userInput[i] === state.sequence[i]) {
-        rightOne();
-        if (state.userInput.length === state.sequence.length) {
-            state.gameState = "no-input";
-            celebrate();
-            oneUp();
-        } else {
-            return;
-        }
-    } else {
-        state.gameState = "no-input";
-        wrongOne();
-        loseALife();
-    }
-};
-
 function changeButtonColour(e) {
     if (e.target && e.target.classList.contains("button")) {
-        if (state.gameState === "user-input") {
+        if (button.prototype.clickable) {
             let orgColor = e.target.classList[1];
             e.target.style.backgroundColor = "white";
             setTimeout(() => {
