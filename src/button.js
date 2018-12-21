@@ -37,27 +37,26 @@ export const buttons = {
 const scorePanel = document.querySelector(".score-panel");
 const startButton = document.querySelector(".start");
 const buttonsDiv = document.getElementById("buttons");
+const body = document.querySelector("body");
+
+function renderBackground(node, color, time) {
+    node.style.backgroundColor = color;
+    setTimeout(() => {
+        node.style.backgroundColor = "rgb(255,255,255)";
+    }, time);
+}
 
 function wrongOne() {
-    document.body.style.backgroundColor = "red";
-    setTimeout(() => {
-        document.body.style.backgroundColor = "white";
-        startButton.style.visibility = "visible";
-    }, 100);
+    renderBackground(body, "red", 100);
+    startButton.style.visibility = "visible";
 }
 
 function rightOne() {
-    scorePanel.style.backgroundColor = "rgb(153, 255, 102)";
-    setTimeout(() => {
-        scorePanel.style.backgroundColor = "white";
-    }, 100);
+    renderBackground(scorePanel, "rgb(153, 255, 102)", 100);
 }
 
 function celebrate() {
-    document.body.style.backgroundColor = "rgb(153, 255, 102)";
-    setTimeout(() => {
-        document.body.style.backgroundColor = "white";
-    }, 100);
+    renderBackground(body, "rgb(153, 255, 102)", 100);
 }
 
 function changeButtonColour(e) {
