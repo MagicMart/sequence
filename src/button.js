@@ -39,10 +39,10 @@ const startButton = document.querySelector(".start");
 const buttonsDiv = document.getElementById("buttons");
 const body = document.querySelector("body");
 
-function renderBackground(node, color, time) {
+function renderBackground(node, color, time, orgColor = "rgb(255,255,255)") {
     node.style.backgroundColor = color;
     setTimeout(() => {
-        node.style.backgroundColor = "rgb(255,255,255)";
+        node.style.backgroundColor = orgColor;
     }, time);
 }
 
@@ -63,10 +63,8 @@ function changeButtonColour(e) {
     if (e.target && e.target.classList.contains("button")) {
         if (button.prototype.clickable) {
             let orgColor = e.target.classList[1];
-            e.target.style.backgroundColor = "white";
-            setTimeout(() => {
-                e.target.style.backgroundColor = orgColor;
-            }, 150);
+            renderBackground(e.target, "rgb(255,255,255)", 150, orgColor);
+
             state.userInput.push(orgColor);
 
             button.prototype.check(state.userInput.length - 1, state);
