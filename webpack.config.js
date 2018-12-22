@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
@@ -7,6 +8,9 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, "docs"),
         filename: "bundle.js"
+    },
+    optimization: {
+        minimizer: [new OptimizeCSSAssetsPlugin({})]
     },
     module: {
         rules: [

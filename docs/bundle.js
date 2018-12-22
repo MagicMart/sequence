@@ -1,1 +1,315 @@
-!function(e){var t={};function n(r){if(t[r])return t[r].exports;var o=t[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=e,n.c=t,n.d=function(e,t,r){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)n.d(r,o,function(t){return e[t]}.bind(null,o));return r},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s=1)}([function(e,t,n){},function(e,t,n){"use strict";n.r(t);n(0);var r=function e(t){var n=document.querySelector(".".concat(t)),r=Object.create(e.prototype);return r.color=t,r.node=n,r};r.prototype.clickable=!1,r.prototype.check=function(e,t){if(t.userInput[e]===t.sequence[e]){if(s(u,"rgb(153, 255, 102)",100),t.userInput.length!==t.sequence.length)return;r.prototype.clickable=!1,s(l,"rgb(153, 255, 102)",100),x()}else r.prototype.clickable=!1,s(l,"red",100),c.style.visibility="visible",O()};var o={blue:r("blue"),green:r("green"),gold:r("gold"),red:r("red")},u=document.querySelector(".score-panel"),c=document.querySelector(".start"),i=document.getElementById("buttons"),l=document.querySelector("body");function s(e,t,n){var r=arguments.length>3&&void 0!==arguments[3]?arguments[3]:"rgb(255,255,255)";e.style.backgroundColor=t,setTimeout(function(){e.style.backgroundColor=r},n)}i.addEventListener("click",function(e){return function(e){if(e.target&&e.target.classList.contains("button")&&r.prototype.clickable){var t=e.target.classList[1];s(e.target,"rgb(255,255,255)",150,t),k.userInput.push(t),r.prototype.check(k.userInput.length-1,k)}}(e)});var a,d,f=r,p=["blue","green","gold","red"],y=null,g=0;function b(e){y||(f.prototype.clickable=!1,y=e);var t=e-y;if(t>600&&(t=0,y=e,g+=1,function(e){d.push(e);var t=e;o[e].node.style.backgroundColor="white",setTimeout(function(){o[e].node.style.backgroundColor=t},300)}(p[Math.floor(4*Math.random())])),g>=a)return y=null,g=0,void setTimeout(function(){f.prototype.clickable=!0},300);requestAnimationFrame(b)}var v=function(e){return a=e,d=[],requestAnimationFrame(b),d},m=document.getElementById("id01"),q=document.getElementById("modal-score");document.querySelector(".w3-modal-content").addEventListener("click",function(){m.style.display="none"});var h=function(e){m.style.display="block",q.innerText=e};n.d(t,"state",function(){return k}),n.d(t,"oneUp",function(){return x}),n.d(t,"loseALife",function(){return O});var k={score:0,lives:3,seqLength:3,sequence:[],userInput:[]},S=document.querySelector(".score"),L=document.querySelector(".lives"),I=document.querySelector(".start");function T(){S.innerText=String(k.score).padStart(3,"0")}function j(){L.innerText=String(k.lives)}function x(){k.score+=k.seqLength,T(),k.seqLength+=1,k.sequence=[],k.userInput=[],setTimeout(function(){k.sequence=v(k.seqLength)},500)}function O(){k.seqLength=3,k.lives-=1,j(),k.sequence=[],k.userInput=[],k.lives<=0&&(h(k.score),k.score=0,k.lives=3,T(),j())}I.addEventListener("click",function(){I.style.visibility="hidden",setTimeout(function(){k.sequence=v(k.seqLength)},500)})}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+// EXTERNAL MODULE: ./src/main.css
+var main = __webpack_require__(0);
+
+// CONCATENATED MODULE: ./src/button.js
+
+
+var button_button = function button(color) {
+  var node = document.querySelector(".".concat(color));
+  var obj = Object.create(button.prototype);
+  obj.color = color;
+  obj.node = node;
+  return obj;
+};
+
+button_button.prototype.clickable = false;
+
+button_button.prototype.check = function (i, state) {
+  if (state.userInput[i] === state.sequence[i]) {
+    rightOne();
+
+    if (state.userInput.length === state.sequence.length) {
+      button_button.prototype.clickable = false;
+      celebrate();
+      oneUp();
+    } else {
+      return;
+    }
+  } else {
+    button_button.prototype.clickable = false;
+    wrongOne();
+    loseALife();
+  }
+};
+
+var buttons = {
+  blue: button_button("blue"),
+  green: button_button("green"),
+  gold: button_button("gold"),
+  red: button_button("red")
+};
+var scorePanel = document.querySelector(".score-panel");
+var startButton = document.querySelector(".start");
+var buttonsDiv = document.getElementById("buttons");
+var body = document.querySelector("body");
+
+function renderBackground(node, color, time) {
+  var orgColor = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "rgb(255,255,255)";
+  node.style.backgroundColor = color;
+  setTimeout(function () {
+    node.style.backgroundColor = orgColor;
+  }, time);
+}
+
+function wrongOne() {
+  renderBackground(body, "red", 100);
+  startButton.style.visibility = "visible";
+}
+
+function rightOne() {
+  renderBackground(scorePanel, "rgb(153, 255, 102)", 100);
+}
+
+function celebrate() {
+  renderBackground(body, "rgb(153, 255, 102)", 100);
+}
+
+function changeButtonColour(e) {
+  if (e.target && e.target.classList.contains("button")) {
+    if (button_button.prototype.clickable) {
+      var orgColor = e.target.classList[1];
+      renderBackground(e.target, "rgb(255,255,255)", 150, orgColor);
+      src_state.userInput.push(orgColor);
+      button_button.prototype.check(src_state.userInput.length - 1, src_state);
+    }
+  }
+}
+
+buttonsDiv.addEventListener("click", function (e) {
+  return changeButtonColour(e);
+});
+/* harmony default export */ var src_button = (button_button);
+// CONCATENATED MODULE: ./src/sequence.js
+// A random colour is chosen from the colors array.
+// It is pushed to the sequence array.
+
+var colors = ["blue", "green", "gold", "red"];
+var start = null;
+var count = 0;
+var sequenceLength;
+var sequenceArray;
+
+function rand() {
+  return Math.floor(Math.random() * 4);
+}
+
+function clickSimulator(el) {
+  sequenceArray.push(el);
+  var orginalColor = el;
+  buttons[el].node.style.backgroundColor = "white";
+  setTimeout(function () {
+    buttons[el].node.style.backgroundColor = orginalColor;
+  }, 300);
+}
+
+function playSequence(stateSequenceLength) {
+  sequenceLength = stateSequenceLength;
+  sequenceArray = [];
+  requestAnimationFrame(sequence);
+  return sequenceArray;
+}
+
+function sequence(timestamp) {
+  if (!start) {
+    src_button.prototype.clickable = false;
+    start = timestamp;
+  }
+
+  var progress = timestamp - start;
+
+  if (progress > 600) {
+    progress = 0;
+    start = timestamp;
+    count += 1;
+    clickSimulator(colors[rand()]);
+  }
+
+  if (count >= sequenceLength) {
+    start = null;
+    count = 0;
+    setTimeout(function () {
+      src_button.prototype.clickable = true;
+    }, 300);
+    return;
+  }
+
+  requestAnimationFrame(sequence);
+}
+
+/* harmony default export */ var src_sequence = (playSequence);
+// CONCATENATED MODULE: ./src/endgame.js
+var id01 = document.getElementById("id01");
+var modalScore = document.getElementById("modal-score");
+var modalContent = document.querySelector(".w3-modal-content");
+modalContent.addEventListener("click", function modalGone() {
+  id01.style.display = "none";
+});
+
+var endGame = function endGame(score) {
+  id01.style.display = "block";
+  modalScore.innerText = score;
+};
+
+/* harmony default export */ var endgame = (endGame);
+// CONCATENATED MODULE: ./src/index.js
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "state", function() { return src_state; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "oneUp", function() { return oneUp; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loseALife", function() { return loseALife; });
+
+
+
+var src_state = {
+  score: 0,
+  lives: 3,
+  seqLength: 3,
+  sequence: [],
+  userInput: []
+};
+var score = document.querySelector(".score");
+var lives = document.querySelector(".lives");
+var src_startButton = document.querySelector(".start");
+
+function updateScore() {
+  score.innerText = String(src_state.score).padStart(3, "0");
+}
+
+function updateLives() {
+  lives.innerText = String(src_state.lives);
+}
+
+function oneUp() {
+  src_state.score += src_state.seqLength;
+  updateScore();
+  src_state.seqLength += 1;
+  src_state.sequence = [];
+  src_state.userInput = [];
+  setTimeout(function () {
+    src_state.sequence = src_sequence(src_state.seqLength);
+  }, 500);
+}
+function loseALife() {
+  src_state.seqLength = 3;
+  src_state.lives -= 1;
+  updateLives();
+  src_state.sequence = [];
+  src_state.userInput = [];
+
+  if (src_state.lives <= 0) {
+    endgame(src_state.score);
+    src_state.score = 0;
+    src_state.lives = 3;
+    updateScore();
+    updateLives();
+  }
+}
+
+function startGame() {
+  src_startButton.style.visibility = "hidden";
+  setTimeout(function () {
+    src_state.sequence = src_sequence(src_state.seqLength);
+  }, 500);
+}
+
+src_startButton.addEventListener("click", startGame);
+
+/***/ })
+/******/ ]);
