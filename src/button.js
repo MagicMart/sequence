@@ -1,14 +1,7 @@
 import { state, loseALife, oneUp } from "./index.js";
+import createButton from "./createButton";
 
-const button = function(color) {
-    let node = document.querySelector(`.${color}`);
-    const obj = Object.create(button.prototype);
-    obj.color = color;
-    obj.node = node;
-    return obj;
-};
-
-button.prototype.clickable = false;
+const { button } = createButton;
 
 button.prototype.check = function(i, state) {
     if (state.userInput[i] === state.sequence[i]) {
@@ -25,13 +18,6 @@ button.prototype.check = function(i, state) {
         wrongOne();
         loseALife();
     }
-};
-
-export const buttons = {
-    blue: button("blue"),
-    green: button("green"),
-    gold: button("gold"),
-    red: button("red")
 };
 
 const scorePanel = document.querySelector(".score-panel");
@@ -73,5 +59,3 @@ function changeButtonColour(e) {
 }
 
 buttonsDiv.addEventListener("click", e => changeButtonColour(e));
-
-export default button;

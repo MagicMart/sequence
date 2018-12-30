@@ -4,7 +4,7 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-    entry: "./src/index.js",
+    entry: "./src/button.js",
     output: {
         path: path.resolve(__dirname, "docs"),
         filename: "bundle.js"
