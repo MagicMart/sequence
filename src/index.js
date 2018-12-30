@@ -1,8 +1,7 @@
-import "./main.css";
 import playSequence from "./sequence.js";
 import endGame from "./endgame.js";
 
-export const state = {
+const state = {
     score: 0,
     lives: 3,
     seqLength: 3,
@@ -22,7 +21,11 @@ function updateLives() {
     lives.innerText = String(state.lives);
 }
 
-export function oneUp() {
+function getState(name) {
+    return state[name];
+}
+
+function oneUp() {
     state.score += state.seqLength;
     updateScore();
     state.seqLength += 1;
@@ -33,7 +36,7 @@ export function oneUp() {
     }, 500);
 }
 
-export function loseALife() {
+function loseALife() {
     state.seqLength = 3;
     state.lives -= 1;
     updateLives();
@@ -56,3 +59,9 @@ function startGame() {
 }
 
 startButton.addEventListener("click", startGame);
+
+export default {
+    getState,
+    oneUp,
+    loseALife
+};
