@@ -100,88 +100,9 @@ __webpack_require__.r(__webpack_exports__);
 // EXTERNAL MODULE: ./src/main.css
 var main = __webpack_require__(0);
 
-// CONCATENATED MODULE: ./src/button.js
-
-
-var button_button = function button(color) {
-  var node = document.querySelector(".".concat(color));
-  var obj = Object.create(button.prototype);
-  obj.color = color;
-  obj.node = node;
-  return obj;
-};
-
-button_button.prototype.clickable = false;
-
-button_button.prototype.check = function (i, state) {
-  if (state.userInput[i] === state.sequence[i]) {
-    rightOne();
-
-    if (state.userInput.length === state.sequence.length) {
-      button_button.prototype.clickable = false;
-      celebrate();
-      oneUp();
-    } else {
-      return;
-    }
-  } else {
-    button_button.prototype.clickable = false;
-    wrongOne();
-    loseALife();
-  }
-};
-
-var buttons = {
-  blue: button_button("blue"),
-  green: button_button("green"),
-  gold: button_button("gold"),
-  red: button_button("red")
-};
-var scorePanel = document.querySelector(".score-panel");
-var startButton = document.querySelector(".start");
-var buttonsDiv = document.getElementById("buttons");
-var body = document.querySelector("body");
-
-function renderBackground(node, color, time) {
-  var orgColor = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "rgb(255,255,255)";
-  node.style.backgroundColor = color;
-  setTimeout(function () {
-    node.style.backgroundColor = orgColor;
-  }, time);
-}
-
-function wrongOne() {
-  renderBackground(body, "red", 100);
-  startButton.style.visibility = "visible";
-}
-
-function rightOne() {
-  renderBackground(scorePanel, "rgb(153, 255, 102)", 100);
-}
-
-function celebrate() {
-  renderBackground(body, "rgb(153, 255, 102)", 100);
-}
-
-function changeButtonColour(e) {
-  if (e.target && e.target.classList.contains("button")) {
-    if (button_button.prototype.clickable) {
-      var orgColor = e.target.classList[1];
-      renderBackground(e.target, "rgb(255,255,255)", 150, orgColor);
-      src_state.userInput.push(orgColor);
-      button_button.prototype.check(src_state.userInput.length - 1, src_state);
-    }
-  }
-}
-
-buttonsDiv.addEventListener("click", function (e) {
-  return changeButtonColour(e);
-});
-/* harmony default export */ var src_button = (button_button);
 // CONCATENATED MODULE: ./src/sequence.js
-// A random colour is chosen from the colors array.
-// It is pushed to the sequence array.
-
+var body = document.querySelector("body");
+var scorePanel = document.querySelector(".score-panel");
 var colors = ["blue", "green", "gold", "red"];
 var start = null;
 var count = 0;
@@ -195,9 +116,15 @@ function rand() {
 function clickSimulator(el) {
   sequenceArray.push(el);
   var orginalColor = el;
-  buttons[el].node.style.backgroundColor = "white";
+  var node = document.querySelector(".".concat(el));
   setTimeout(function () {
-    buttons[el].node.style.backgroundColor = orginalColor;
+    node.style.cssText = "background-color: white;border: 10px solid ".concat(orginalColor);
+    scorePanel.style.backgroundColor = orginalColor;
+  }, 0);
+  setTimeout(function () {
+    node.style.backgroundColor = orginalColor;
+    scorePanel.style.backgroundColor = "white";
+    node.style.cssText = "border: 10px solid black";
   }, 300);
 }
 
@@ -210,13 +137,14 @@ function playSequence(stateSequenceLength) {
 
 function sequence(timestamp) {
   if (!start) {
-    src_button.prototype.clickable = false;
+    // button.prototype.clickable = false;
+    body.style.backgroundColor = "rgba(120,120,120)";
     start = timestamp;
   }
 
   var progress = timestamp - start;
 
-  if (progress > 600) {
+  if (progress > 800) {
     progress = 0;
     start = timestamp;
     count += 1;
@@ -227,7 +155,8 @@ function sequence(timestamp) {
     start = null;
     count = 0;
     setTimeout(function () {
-      src_button.prototype.clickable = true;
+      // button.prototype.clickable = true;
+      body.style.backgroundColor = "whitesmoke";
     }, 300);
     return;
   }
@@ -251,13 +180,9 @@ var endGame = function endGame(score) {
 
 /* harmony default export */ var endgame = (endGame);
 // CONCATENATED MODULE: ./src/index.js
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "state", function() { return src_state; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "oneUp", function() { return oneUp; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loseALife", function() { return loseALife; });
 
 
-
-var src_state = {
+var state = {
   score: 0,
   lives: 3,
   seqLength: 3,
@@ -266,50 +191,149 @@ var src_state = {
 };
 var score = document.querySelector(".score");
 var lives = document.querySelector(".lives");
-var src_startButton = document.querySelector(".start");
+var startButton = document.querySelector(".start");
 
 function updateScore() {
-  score.innerText = String(src_state.score).padStart(3, "0");
+  score.innerText = String(state.score).padStart(3, "0");
 }
 
 function updateLives() {
-  lives.innerText = String(src_state.lives);
+  lives.innerText = String(state.lives);
+}
+
+function getState(name) {
+  return state[name];
 }
 
 function oneUp() {
-  src_state.score += src_state.seqLength;
+  state.score += state.seqLength;
   updateScore();
-  src_state.seqLength += 1;
-  src_state.sequence = [];
-  src_state.userInput = [];
+  state.seqLength += 1;
+  state.sequence = [];
+  state.userInput = [];
   setTimeout(function () {
-    src_state.sequence = src_sequence(src_state.seqLength);
+    state.sequence = src_sequence(state.seqLength);
   }, 500);
 }
-function loseALife() {
-  src_state.seqLength = 3;
-  src_state.lives -= 1;
-  updateLives();
-  src_state.sequence = [];
-  src_state.userInput = [];
 
-  if (src_state.lives <= 0) {
-    endgame(src_state.score);
-    src_state.score = 0;
-    src_state.lives = 3;
+function loseALife() {
+  state.seqLength = 3;
+  state.lives -= 1;
+  updateLives();
+  state.sequence = [];
+  state.userInput = [];
+
+  if (state.lives <= 0) {
+    endgame(state.score);
+    state.score = 0;
+    state.lives = 3;
     updateScore();
     updateLives();
   }
 }
 
 function startGame() {
-  src_startButton.style.visibility = "hidden";
+  startButton.style.visibility = "hidden";
   setTimeout(function () {
-    src_state.sequence = src_sequence(src_state.seqLength);
+    state.sequence = src_sequence(state.seqLength);
   }, 500);
 }
 
-src_startButton.addEventListener("click", startGame);
+startButton.addEventListener("click", startGame);
+/* harmony default export */ var src = (Object.freeze({
+  getState: getState,
+  oneUp: oneUp,
+  loseALife: loseALife
+}));
+// CONCATENATED MODULE: ./src/createButton.js
+var createButton_button = function button(color) {
+  var node = document.querySelector(".".concat(color));
+  var obj = Object.create(button.prototype);
+  obj.color = color;
+  obj.node = node;
+  return obj;
+}; //button.prototype.clickable = false;
+
+
+var buttons = {
+  blue: createButton_button("blue"),
+  green: createButton_button("green"),
+  gold: createButton_button("gold"),
+  red: createButton_button("red")
+};
+/* harmony default export */ var createButton = ({
+  button: createButton_button,
+  buttons: buttons
+});
+// CONCATENATED MODULE: ./src/button.js
+
+
+
+var button_getState = src.getState,
+    button_loseALife = src.loseALife,
+    button_oneUp = src.oneUp;
+var button_button = createButton.button;
+
+button_button.prototype.check = function (i) {
+  if (button_getState("userInput")[i] === button_getState("sequence")[i]) {
+    rightOne();
+
+    if (button_getState("userInput").length === button_getState("sequence").length) {
+      button_button.prototype.clickable = false;
+      celebrate();
+      button_oneUp();
+    } else {
+      return;
+    }
+  } else {
+    button_button.prototype.clickable = false;
+    wrongOne();
+    button_loseALife();
+  }
+};
+
+var button_scorePanel = document.querySelector(".score-panel");
+var button_startButton = document.querySelector(".start");
+var buttonsDiv = document.getElementById("buttons");
+var button_body = document.querySelector("body");
+
+function renderBackground(node, color, time) {
+  var orgColor = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "rgb(255,255,255)";
+  node.style.backgroundColor = color;
+  setTimeout(function () {
+    node.style.backgroundColor = orgColor;
+  }, time);
+}
+
+function wrongOne() {
+  renderBackground(button_body, "red", 100);
+  button_startButton.style.visibility = "visible";
+}
+
+function rightOne() {
+  renderBackground(button_scorePanel, "rgb(153, 255, 102)", 100);
+}
+
+function celebrate() {
+  renderBackground(button_body, "rgb(153, 255, 102)", 100);
+}
+
+function changeButtonColour(e) {
+  if (e.target && e.target.classList.contains("button")) {
+    var _body = document.querySelector("body");
+
+    if (_body.style.backgroundColor === "whitesmoke") {
+      var orgColor = e.target.classList[1];
+      renderBackground(e.target, "rgb(255,255,255)", 150, orgColor);
+      button_getState("userInput").push(orgColor);
+      button_button.prototype.check(button_getState("userInput").length - 1);
+    }
+  }
+}
+
+buttonsDiv.addEventListener("click", function (e) {
+  return changeButtonColour(e);
+});
 
 /***/ })
 /******/ ]);
