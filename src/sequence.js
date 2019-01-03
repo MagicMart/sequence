@@ -1,9 +1,10 @@
 // A random colour is chosen from the colors array.
 // It is pushed to the sequence array.
 
-import createButton from "./createButton.js";
+// import createButton from "./createButton.js";
 
-const { button, buttons } = createButton;
+// const { button, buttons } = createButton;
+const body = document.querySelector("body");
 
 const colors = ["blue", "green", "gold", "red"];
 let start = null;
@@ -18,9 +19,10 @@ function rand() {
 function clickSimulator(el) {
     sequenceArray.push(el);
     let orginalColor = el;
-    buttons[el].node.style.backgroundColor = "white";
+    let node = document.querySelector(`.${el}`);
+    node.style.backgroundColor = "white";
     setTimeout(() => {
-        buttons[el].node.style.backgroundColor = orginalColor;
+        node.style.backgroundColor = orginalColor;
     }, 300);
 }
 
@@ -33,7 +35,8 @@ function playSequence(stateSequenceLength) {
 
 function sequence(timestamp) {
     if (!start) {
-        button.prototype.clickable = false;
+        // button.prototype.clickable = false;
+        body.style.backgroundColor = "rgba(120,120,120)";
         start = timestamp;
     }
     let progress = timestamp - start;
@@ -48,7 +51,8 @@ function sequence(timestamp) {
         start = null;
         count = 0;
         setTimeout(() => {
-            button.prototype.clickable = true;
+            // button.prototype.clickable = true;
+            body.style.backgroundColor = "whitesmoke";
         }, 300);
 
         return;

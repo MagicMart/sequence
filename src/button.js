@@ -49,7 +49,8 @@ function celebrate() {
 
 function changeButtonColour(e) {
     if (e.target && e.target.classList.contains("button")) {
-        if (button.prototype.clickable) {
+        const body = document.querySelector("body");
+        if (body.style.backgroundColor === "whitesmoke") {
             let orgColor = e.target.classList[1];
             renderBackground(e.target, "rgb(255,255,255)", 150, orgColor);
 

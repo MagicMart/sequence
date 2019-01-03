@@ -60,8 +60,8 @@ function startGame() {
 
 startButton.addEventListener("click", startGame);
 
-export default {
+export default Object.freeze({
     getState,
     oneUp,
     loseALife
-};
+});

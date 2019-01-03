@@ -6,7 +6,7 @@ const button = function(color) {
     return obj;
 };
 
-button.prototype.clickable = false;
+//button.prototype.clickable = false;
 
 const buttons = {
     blue: button("blue"),
