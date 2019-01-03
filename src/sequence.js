@@ -1,4 +1,5 @@
 const body = document.querySelector("body");
+const scorePanel = document.querySelector(".score-panel");
 
 const colors = ["blue", "green", "gold", "red"];
 let start = null;
@@ -14,9 +15,14 @@ function clickSimulator(el) {
     sequenceArray.push(el);
     let orginalColor = el;
     let node = document.querySelector(`.${el}`);
-    node.style.backgroundColor = "white";
+    setTimeout(() => {
+        node.style.cssText = `background-color: white;border: 10px solid ${orginalColor}`;
+        scorePanel.style.backgroundColor = orginalColor;
+    }, 0);
     setTimeout(() => {
         node.style.backgroundColor = orginalColor;
+        scorePanel.style.backgroundColor = "white";
+        node.style.cssText = "border: 10px solid black";
     }, 300);
 }
 
@@ -35,7 +41,7 @@ function sequence(timestamp) {
     }
     let progress = timestamp - start;
 
-    if (progress > 600) {
+    if (progress > 800) {
         progress = 0;
         start = timestamp;
         count += 1;
