@@ -1,9 +1,3 @@
-// A random colour is chosen from the colors array.
-// It is pushed to the sequence array.
-
-// import createButton from "./createButton.js";
-
-// const { button, buttons } = createButton;
 const body = document.querySelector("body");
 
 const colors = ["blue", "green", "gold", "red"];
