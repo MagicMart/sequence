@@ -2,13 +2,13 @@ import "./main.css";
 import index from "./index.js";
 import createButton from "./createButton";
 
-const { getState, loseALife, oneUp } = index;
+const { getUserInput, getSequence, userInput, loseALife, oneUp } = index;
 const { button } = createButton;
 
 button.prototype.check = function(i) {
-    if (getState("userInput")[i] === getState("sequence")[i]) {
+    if (getUserInput()[i] === getSequence()[i]) {
         rightOne();
-        if (getState("userInput").length === getState("sequence").length) {
+        if (getUserInput().length === getSequence().length) {
             button.prototype.clickable = false;
             celebrate();
             oneUp();
@@ -53,10 +53,9 @@ function changeButtonColour(e) {
         if (body.style.backgroundColor === "whitesmoke") {
             let orgColor = e.target.classList[1];
             renderBackground(e.target, "rgb(255,255,255)", 150, orgColor);
-
-            getState("userInput").push(orgColor);
-
-            button.prototype.check(getState("userInput").length - 1);
+            //getUserInput().push(orgColor);
+            userInput(orgColor);
+            button.prototype.check(getUserInput().length - 1);
         }
     }
 }

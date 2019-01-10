@@ -21,8 +21,16 @@ function updateLives() {
     lives.innerText = String(state.lives);
 }
 
-function getState(name) {
-    return state[name];
+function getSequence() {
+    return state.sequence;
+}
+
+function getUserInput() {
+    return state.userInput;
+}
+
+function userInput(color) {
+    state.userInput = [...state.userInput, color];
 }
 
 function oneUp() {
@@ -61,7 +69,9 @@ function startGame() {
 startButton.addEventListener("click", startGame);
 
 export default Object.freeze({
-    getState,
+    getSequence,
+    getUserInput,
+    userInput,
     oneUp,
     loseALife
 });
