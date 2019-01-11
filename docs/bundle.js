@@ -180,6 +180,14 @@ var endGame = function endGame(score) {
 
 /* harmony default export */ var endgame = (endGame);
 // CONCATENATED MODULE: ./src/index.js
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 
 
 var state = {
@@ -201,8 +209,23 @@ function updateLives() {
   lives.innerText = String(state.lives);
 }
 
-function getState(name) {
-  return state[name];
+function getSequence() {
+  return _toConsumableArray(state.sequence);
+}
+
+function getUserInput() {
+  return _toConsumableArray(state.userInput);
+}
+/**
+ * When a button is clicked,
+ * its color is added to the array,
+ * state.userInput
+ * @param {string} color - button color
+ */
+
+
+function userInput(color) {
+  state.userInput = _toConsumableArray(state.userInput).concat([color]);
 }
 
 function oneUp() {
@@ -241,7 +264,9 @@ function startGame() {
 
 startButton.addEventListener("click", startGame);
 /* harmony default export */ var src = (Object.freeze({
-  getState: getState,
+  getSequence: getSequence,
+  getUserInput: getUserInput,
+  userInput: userInput,
   oneUp: oneUp,
   loseALife: loseALife
 }));
@@ -269,16 +294,18 @@ var buttons = {
 
 
 
-var button_getState = src.getState,
+var button_getUserInput = src.getUserInput,
+    button_getSequence = src.getSequence,
+    button_userInput = src.userInput,
     button_loseALife = src.loseALife,
     button_oneUp = src.oneUp;
 var button_button = createButton.button;
 
 button_button.prototype.check = function (i) {
-  if (button_getState("userInput")[i] === button_getState("sequence")[i]) {
+  if (button_getUserInput()[i] === button_getSequence()[i]) {
     rightOne();
 
-    if (button_getState("userInput").length === button_getState("sequence").length) {
+    if (button_getUserInput().length === button_getSequence().length) {
       button_button.prototype.clickable = false;
       celebrate();
       button_oneUp();
@@ -325,8 +352,8 @@ function changeButtonColour(e) {
     if (_body.style.backgroundColor === "whitesmoke") {
       var orgColor = e.target.classList[1];
       renderBackground(e.target, "rgb(255,255,255)", 150, orgColor);
-      button_getState("userInput").push(orgColor);
-      button_button.prototype.check(button_getState("userInput").length - 1);
+      button_userInput(orgColor);
+      button_button.prototype.check(button_getUserInput().length - 1);
     }
   }
 }
