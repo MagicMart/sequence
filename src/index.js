@@ -22,13 +22,19 @@ function updateLives() {
 }
 
 function getSequence() {
-    return state.sequence;
+    return [...state.sequence];
 }
 
 function getUserInput() {
-    return state.userInput;
+    return [...state.userInput];
 }
 
+/**
+ * When a button is clicked,
+ * its color is added to the array,
+ * state.userInput
+ * @param {string} color - button color
+ */
 function userInput(color) {
     state.userInput = [...state.userInput, color];
 }

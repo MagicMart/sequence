@@ -53,7 +53,6 @@ function changeButtonColour(e) {
         if (body.style.backgroundColor === "whitesmoke") {
             let orgColor = e.target.classList[1];
             renderBackground(e.target, "rgb(255,255,255)", 150, orgColor);
-            //getUserInput().push(orgColor);
             userInput(orgColor);
             button.prototype.check(getUserInput().length - 1);
         }
