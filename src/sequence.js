@@ -6,6 +6,7 @@ let start = null;
 let count = 0;
 let sequenceLength;
 let sequenceArray;
+let timerId;
 
 function rand() {
     return Math.floor(Math.random() * 4);
@@ -29,35 +30,28 @@ function clickSimulator(el) {
 function playSequence(stateSequenceLength) {
     sequenceLength = stateSequenceLength;
     sequenceArray = [];
-    requestAnimationFrame(sequence);
+    timerId = setInterval(sequence, 800);
     return sequenceArray;
 }
 
-function sequence(timestamp) {
+function sequence() {
     if (!start) {
-        // button.prototype.clickable = false;
         body.style.backgroundColor = "rgba(120,120,120)";
-        start = timestamp;
+        start = true;
     }
-    let progress = timestamp - start;
+    count += 1;
+    clickSimulator(colors[rand()]);
 
-    if (progress > 800) {
-        progress = 0;
-        start = timestamp;
-        count += 1;
-        clickSimulator(colors[rand()]);
-    }
     if (count >= sequenceLength) {
         start = null;
         count = 0;
+        clearInterval(timerId);
         setTimeout(() => {
-            // button.prototype.clickable = true;
             body.style.backgroundColor = "whitesmoke";
         }, 300);
 
         return;
     }
-    requestAnimationFrame(sequence);
 }
 
 export default playSequence;
