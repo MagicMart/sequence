@@ -1,8 +1,6 @@
 const button = function(color) {
-    let node = document.querySelector(`.${color}`);
     const obj = Object.create(button.prototype);
     obj.color = color;
-    obj.node = node;
     return obj;
 };
 
