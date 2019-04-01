@@ -1,15 +1,13 @@
 const body = document.querySelector("body");
 const scorePanel = document.querySelector(".score-panel");
 
-const colors = ["blue", "green", "gold", "red"];
-let start = null;
-let count = 0;
 let sequenceLength;
 let sequenceArray;
 let timerId;
 
-function rand() {
-    return Math.floor(Math.random() * 4);
+function randomColor() {
+    const colors = ["blue", "green", "gold", "red"];
+    return colors[Math.floor(Math.random() * 4)];
 }
 
 function clickSimulator(el) {
@@ -27,24 +25,21 @@ function clickSimulator(el) {
     }, 300);
 }
 
-function playSequence(stateSequenceLength) {
-    sequenceLength = stateSequenceLength;
+function playSequence(num) {
+    sequenceLength = num;
     sequenceArray = [];
     timerId = setInterval(sequence, 800);
     return sequenceArray;
 }
 
 function sequence() {
-    if (!start) {
+    if (sequenceArray.length === 0) {
         body.style.backgroundColor = "rgba(120,120,120)";
-        start = true;
     }
-    count += 1;
-    clickSimulator(colors[rand()]);
+    sequenceLength -= 1;
+    clickSimulator(randomColor());
 
-    if (count >= sequenceLength) {
-        start = null;
-        count = 0;
+    if (sequenceLength === 0) {
         clearInterval(timerId);
         setTimeout(() => {
             body.style.backgroundColor = "whitesmoke";
