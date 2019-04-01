@@ -1,32 +1,45 @@
 import playSequence from "./sequence.js";
 import endGame from "./endgame.js";
 
-const state = {
-    score: 0,
-    lives: 3,
-    seqLength: 3,
-    sequence: [],
-    userInput: []
-};
+const state = (function() {
+    let game = {
+        score: 0,
+        lives: 3,
+        sequence: [],
+        seqLength: 3,
+        userInput: []
+    };
+    function handleState(obj) {
+        if (obj !== undefined) {
+            game = Object.assign(game, obj);
+        }
+        return game;
+    }
+    return {
+        handleState
+    };
+})();
 
 const score = document.querySelector(".score");
 const lives = document.querySelector(".lives");
 const startButton = document.querySelector(".start");
 
 function updateScore() {
-    score.innerText = String(state.score).padStart(3, "0");
+    score.innerText = String(state.handleState().score).padStart(3, "0");
 }
 
 function updateLives() {
-    lives.innerText = String(state.lives);
+    lives.innerText = String(state.handleState().lives);
 }
 
 function getSequence() {
-    return [...state.sequence];
+    const { sequence } = state.handleState();
+    return sequence;
 }
 
 function getUserInput() {
-    return [...state.userInput];
+    const { userInput } = state.handleState();
+    return userInput;
 }
 
 /**
@@ -36,39 +49,48 @@ function getUserInput() {
  * @param {string} color - button color
  */
 function userInput(color) {
-    state.userInput = [...state.userInput, color];
+    const { userInput } = state.handleState();
+    state.handleState({ userInput: [...userInput, color] });
 }
 
 function oneUp() {
-    state.score += state.seqLength;
+    const { score, seqLength } = state.handleState();
+
+    state.handleState({
+        score: score + seqLength,
+        seqLength: seqLength + 1,
+        sequence: [],
+        userInput: []
+    });
     updateScore();
-    state.seqLength += 1;
-    state.sequence = [];
-    state.userInput = [];
     setTimeout(() => {
-        state.sequence = playSequence(state.seqLength);
+        state.handleState({ sequence: playSequence(seqLength + 1) });
     }, 500);
 }
 
 function loseALife() {
-    state.seqLength = 3;
-    state.lives -= 1;
+    const { lives, score } = state.handleState();
+
+    state.handleState({
+        seqLength: 3,
+        lives: lives - 1,
+        sequence: [],
+        userInput: []
+    });
     updateLives();
-    state.sequence = [];
-    state.userInput = [];
-    if (state.lives <= 0) {
-        endGame(state.score);
-        state.score = 0;
-        state.lives = 3;
+    if (lives - 1 <= 0) {
+        endGame(score);
+        state.handleState({ score: 0, lives: 3 });
         updateScore();
         updateLives();
     }
 }
 
 function startGame() {
+    const { seqLength } = state.handleState();
     startButton.style.visibility = "hidden";
     setTimeout(() => {
-        state.sequence = playSequence(state.seqLength);
+        state.handleState({ sequence: playSequence(seqLength) });
     }, 500);
 }
 
