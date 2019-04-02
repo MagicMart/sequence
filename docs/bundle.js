@@ -103,14 +103,13 @@ var main = __webpack_require__(0);
 // CONCATENATED MODULE: ./src/sequence.js
 var body = document.querySelector("body");
 var scorePanel = document.querySelector(".score-panel");
-var colors = ["blue", "green", "gold", "red"];
-var start = null;
-var count = 0;
 var sequenceLength;
 var sequenceArray;
+var timerId;
 
-function rand() {
-  return Math.floor(Math.random() * 4);
+function randomColor() {
+  var colors = ["blue", "green", "gold", "red"];
+  return colors[Math.floor(Math.random() * 4)];
 }
 
 function clickSimulator(el) {
@@ -128,40 +127,28 @@ function clickSimulator(el) {
   }, 300);
 }
 
-function playSequence(stateSequenceLength) {
-  sequenceLength = stateSequenceLength;
+function playSequence(num) {
+  sequenceLength = num;
   sequenceArray = [];
-  requestAnimationFrame(sequence);
+  timerId = setInterval(sequence, 800);
   return sequenceArray;
 }
 
-function sequence(timestamp) {
-  if (!start) {
-    // button.prototype.clickable = false;
+function sequence() {
+  if (sequenceArray.length === 0) {
     body.style.backgroundColor = "rgba(120,120,120)";
-    start = timestamp;
   }
 
-  var progress = timestamp - start;
+  sequenceLength -= 1;
+  clickSimulator(randomColor());
 
-  if (progress > 800) {
-    progress = 0;
-    start = timestamp;
-    count += 1;
-    clickSimulator(colors[rand()]);
-  }
-
-  if (count >= sequenceLength) {
-    start = null;
-    count = 0;
+  if (sequenceLength === 0) {
+    clearInterval(timerId);
     setTimeout(function () {
-      // button.prototype.clickable = true;
       body.style.backgroundColor = "whitesmoke";
     }, 300);
     return;
   }
-
-  requestAnimationFrame(sequence);
 }
 
 /* harmony default export */ var src_sequence = (playSequence);
@@ -190,31 +177,53 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 
 
-var state = {
-  score: 0,
-  lives: 3,
-  seqLength: 3,
-  sequence: [],
-  userInput: []
-};
-var score = document.querySelector(".score");
-var lives = document.querySelector(".lives");
+
+var state = function () {
+  var game = {
+    score: 0,
+    lives: 3,
+    sequence: [],
+    seqLength: 3,
+    userInput: []
+  };
+
+  function handleState(obj) {
+    if (obj !== undefined) {
+      game = Object.assign(game, obj);
+    }
+
+    return game;
+  }
+
+  return {
+    handleState: handleState
+  };
+}();
+
+var src_score = document.querySelector(".score");
+var src_lives = document.querySelector(".lives");
 var startButton = document.querySelector(".start");
 
 function updateScore() {
-  score.innerText = String(state.score).padStart(3, "0");
+  src_score.innerText = String(state.handleState().score).padStart(3, "0");
 }
 
 function updateLives() {
-  lives.innerText = String(state.lives);
+  src_lives.innerText = String(state.handleState().lives);
 }
 
 function getSequence() {
-  return _toConsumableArray(state.sequence);
+  var _state$handleState = state.handleState(),
+      sequence = _state$handleState.sequence;
+
+  return sequence;
 }
 
 function getUserInput() {
-  return _toConsumableArray(state.userInput);
+  var _state$handleState2 = state.handleState(),
+      userInput = _state$handleState2.userInput;
+
+  return userInput;
 }
 /**
  * When a button is clicked,
@@ -225,40 +234,66 @@ function getUserInput() {
 
 
 function userInput(color) {
-  state.userInput = _toConsumableArray(state.userInput).concat([color]);
+  var _state$handleState3 = state.handleState(),
+      userInput = _state$handleState3.userInput;
+
+  state.handleState({
+    userInput: _toConsumableArray(userInput).concat([color])
+  });
 }
 
 function oneUp() {
-  state.score += state.seqLength;
+  var _state$handleState4 = state.handleState(),
+      score = _state$handleState4.score,
+      seqLength = _state$handleState4.seqLength;
+
+  state.handleState({
+    score: score + seqLength,
+    seqLength: seqLength + 1,
+    sequence: [],
+    userInput: []
+  });
   updateScore();
-  state.seqLength += 1;
-  state.sequence = [];
-  state.userInput = [];
   setTimeout(function () {
-    state.sequence = src_sequence(state.seqLength);
+    state.handleState({
+      sequence: src_sequence(seqLength + 1)
+    });
   }, 500);
 }
 
 function loseALife() {
-  state.seqLength = 3;
-  state.lives -= 1;
-  updateLives();
-  state.sequence = [];
-  state.userInput = [];
+  var _state$handleState5 = state.handleState(),
+      lives = _state$handleState5.lives,
+      score = _state$handleState5.score;
 
-  if (state.lives <= 0) {
-    endgame(state.score);
-    state.score = 0;
-    state.lives = 3;
+  state.handleState({
+    seqLength: 3,
+    lives: lives - 1,
+    sequence: [],
+    userInput: []
+  });
+  updateLives();
+
+  if (lives - 1 <= 0) {
+    endgame(score);
+    state.handleState({
+      score: 0,
+      lives: 3
+    });
     updateScore();
     updateLives();
   }
 }
 
 function startGame() {
+  var _state$handleState6 = state.handleState(),
+      seqLength = _state$handleState6.seqLength;
+
   startButton.style.visibility = "hidden";
   setTimeout(function () {
-    state.sequence = src_sequence(state.seqLength);
+    state.handleState({
+      sequence: src_sequence(seqLength)
+    });
   }, 500);
 }
 
@@ -270,28 +305,7 @@ startButton.addEventListener("click", startGame);
   oneUp: oneUp,
   loseALife: loseALife
 }));
-// CONCATENATED MODULE: ./src/createButton.js
-var createButton_button = function button(color) {
-  var node = document.querySelector(".".concat(color));
-  var obj = Object.create(button.prototype);
-  obj.color = color;
-  obj.node = node;
-  return obj;
-}; //button.prototype.clickable = false;
-
-
-var buttons = {
-  blue: createButton_button("blue"),
-  green: createButton_button("green"),
-  gold: createButton_button("gold"),
-  red: createButton_button("red")
-};
-/* harmony default export */ var createButton = ({
-  button: createButton_button,
-  buttons: buttons
-});
 // CONCATENATED MODULE: ./src/button.js
-
 
 
 var button_getUserInput = src.getUserInput,
@@ -299,21 +313,21 @@ var button_getUserInput = src.getUserInput,
     button_userInput = src.userInput,
     button_loseALife = src.loseALife,
     button_oneUp = src.oneUp;
-var button_button = createButton.button;
 
-button_button.prototype.check = function (i) {
-  if (button_getUserInput()[i] === button_getSequence()[i]) {
+var check = function check(i) {
+  var input = button_getUserInput();
+  var sequence = button_getSequence();
+
+  if (input[i] === sequence[i]) {
     rightOne();
 
-    if (button_getUserInput().length === button_getSequence().length) {
-      button_button.prototype.clickable = false;
+    if (input.length === sequence.length) {
       celebrate();
       button_oneUp();
     } else {
       return;
     }
   } else {
-    button_button.prototype.clickable = false;
     wrongOne();
     button_loseALife();
   }
@@ -333,16 +347,16 @@ function renderBackground(node, color, time) {
 }
 
 function wrongOne() {
-  renderBackground(button_body, "red", 100);
+  renderBackground(button_body, "red", 150);
   button_startButton.style.visibility = "visible";
 }
 
 function rightOne() {
-  renderBackground(button_scorePanel, "rgb(153, 255, 102)", 100);
+  renderBackground(button_scorePanel, "rgb(153, 255, 102)", 150);
 }
 
 function celebrate() {
-  renderBackground(button_body, "rgb(153, 255, 102)", 100);
+  renderBackground(button_body, "rgb(153, 255, 102)", 150);
 }
 
 function changeButtonColour(e) {
@@ -353,7 +367,7 @@ function changeButtonColour(e) {
       var orgColor = e.target.classList[1];
       renderBackground(e.target, "rgb(255,255,255)", 150, orgColor);
       button_userInput(orgColor);
-      button_button.prototype.check(button_getUserInput().length - 1);
+      check(button_getUserInput().length - 1);
     }
   }
 }
