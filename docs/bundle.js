@@ -178,7 +178,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 
 
-var state = function () {
+var handleState = function () {
   var game = {
     score: 0,
     lives: 3,
@@ -195,9 +195,7 @@ var state = function () {
     return game;
   }
 
-  return {
-    handleState: handleState
-  };
+  return handleState;
 }();
 
 var src_score = document.querySelector(".score");
@@ -205,23 +203,23 @@ var src_lives = document.querySelector(".lives");
 var startButton = document.querySelector(".start");
 
 function updateScore() {
-  src_score.innerText = String(state.handleState().score).padStart(3, "0");
+  src_score.innerText = String(handleState().score).padStart(3, "0");
 }
 
 function updateLives() {
-  src_lives.innerText = String(state.handleState().lives);
+  src_lives.innerText = String(handleState().lives);
 }
 
 function getSequence() {
-  var _state$handleState = state.handleState(),
-      sequence = _state$handleState.sequence;
+  var _handleState = handleState(),
+      sequence = _handleState.sequence;
 
   return sequence;
 }
 
 function getUserInput() {
-  var _state$handleState2 = state.handleState(),
-      userInput = _state$handleState2.userInput;
+  var _handleState2 = handleState(),
+      userInput = _handleState2.userInput;
 
   return userInput;
 }
@@ -234,20 +232,20 @@ function getUserInput() {
 
 
 function userInput(color) {
-  var _state$handleState3 = state.handleState(),
-      userInput = _state$handleState3.userInput;
+  var _handleState3 = handleState(),
+      userInput = _handleState3.userInput;
 
-  state.handleState({
+  handleState({
     userInput: _toConsumableArray(userInput).concat([color])
   });
 }
 
 function oneUp() {
-  var _state$handleState4 = state.handleState(),
-      score = _state$handleState4.score,
-      seqLength = _state$handleState4.seqLength;
+  var _handleState4 = handleState(),
+      score = _handleState4.score,
+      seqLength = _handleState4.seqLength;
 
-  state.handleState({
+  handleState({
     score: score + seqLength,
     seqLength: seqLength + 1,
     sequence: [],
@@ -255,18 +253,18 @@ function oneUp() {
   });
   updateScore();
   setTimeout(function () {
-    state.handleState({
+    handleState({
       sequence: src_sequence(seqLength + 1)
     });
   }, 500);
 }
 
 function loseALife() {
-  var _state$handleState5 = state.handleState(),
-      lives = _state$handleState5.lives,
-      score = _state$handleState5.score;
+  var _handleState5 = handleState(),
+      lives = _handleState5.lives,
+      score = _handleState5.score;
 
-  state.handleState({
+  handleState({
     seqLength: 3,
     lives: lives - 1,
     sequence: [],
@@ -276,7 +274,7 @@ function loseALife() {
 
   if (lives - 1 <= 0) {
     endgame(score);
-    state.handleState({
+    handleState({
       score: 0,
       lives: 3
     });
@@ -286,12 +284,12 @@ function loseALife() {
 }
 
 function startGame() {
-  var _state$handleState6 = state.handleState(),
-      seqLength = _state$handleState6.seqLength;
+  var _handleState6 = handleState(),
+      seqLength = _handleState6.seqLength;
 
   startButton.style.visibility = "hidden";
   setTimeout(function () {
-    state.handleState({
+    handleState({
       sequence: src_sequence(seqLength)
     });
   }, 500);
