@@ -45,7 +45,7 @@ function getUserInput() {
  * state.userInput
  * @param {string} color - button color
  */
-function userInput(color) {
+function handleClick(color) {
     const { userInput } = handleState();
     handleState({ userInput: [...userInput, color] });
 }
@@ -96,7 +96,7 @@ startButton.addEventListener("click", startGame);
 export default Object.freeze({
     getSequence,
     getUserInput,
-    userInput,
+    handleClick,
     oneUp,
     loseALife
 });

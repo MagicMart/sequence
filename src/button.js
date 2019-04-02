@@ -1,7 +1,7 @@
 import "./main.css";
 import index from "./index.js";
 
-const { getUserInput, getSequence, userInput, loseALife, oneUp } = index;
+const { getUserInput, getSequence, handleClick, loseALife, oneUp } = index;
 
 const check = function(i) {
     const input = getUserInput();
@@ -51,7 +51,7 @@ function changeButtonColour(e) {
         if (body.style.backgroundColor === "whitesmoke") {
             let orgColor = e.target.classList[1];
             renderBackground(e.target, "rgb(255,255,255)", 150, orgColor);
-            userInput(orgColor);
+            handleClick(orgColor);
             check(getUserInput().length - 1);
         }
     }

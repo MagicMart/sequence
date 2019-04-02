@@ -228,7 +228,7 @@ function getUserInput() {
  */
 
 
-function userInput(color) {
+function handleClick(color) {
   var _handleState3 = handleState(),
       userInput = _handleState3.userInput;
 
@@ -296,7 +296,7 @@ startButton.addEventListener("click", startGame);
 /* harmony default export */ var src = (Object.freeze({
   getSequence: getSequence,
   getUserInput: getUserInput,
-  userInput: userInput,
+  handleClick: handleClick,
   oneUp: oneUp,
   loseALife: loseALife
 }));
@@ -305,7 +305,7 @@ startButton.addEventListener("click", startGame);
 
 var button_getUserInput = src.getUserInput,
     button_getSequence = src.getSequence,
-    button_userInput = src.userInput,
+    button_handleClick = src.handleClick,
     button_loseALife = src.loseALife,
     button_oneUp = src.oneUp;
 
@@ -361,7 +361,7 @@ function changeButtonColour(e) {
     if (_body.style.backgroundColor === "whitesmoke") {
       var orgColor = e.target.classList[1];
       renderBackground(e.target, "rgb(255,255,255)", 150, orgColor);
-      button_userInput(orgColor);
+      button_handleClick(orgColor);
       check(button_getUserInput().length - 1);
     }
   }
