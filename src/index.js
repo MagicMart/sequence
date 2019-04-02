@@ -9,13 +9,12 @@ const handleState = (function() {
         seqLength: 3,
         userInput: []
     };
-    function handleState(obj) {
+    return function(obj) {
         if (obj !== undefined) {
             game = Object.assign(game, obj);
         }
         return game;
-    }
-    return handleState;
+    };
 })();
 
 const score = document.querySelector(".score");
