@@ -33,16 +33,16 @@ function renderBackground(node, color, time, orgColor = "rgb(255,255,255)") {
 }
 
 function wrongOne() {
-    renderBackground(body, "red", 100);
+    renderBackground(body, "red", 150);
     startButton.style.visibility = "visible";
 }
 
 function rightOne() {
-    renderBackground(scorePanel, "rgb(153, 255, 102)", 100);
+    renderBackground(scorePanel, "rgb(153, 255, 102)", 150);
 }
 
 function celebrate() {
-    renderBackground(body, "rgb(153, 255, 102)", 100);
+    renderBackground(body, "rgb(153, 255, 102)", 150);
 }
 
 function changeButtonColour(e) {
