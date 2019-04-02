@@ -1,7 +1,7 @@
 import playSequence from "./sequence.js";
 import endGame from "./endgame.js";
 
-const state = (function() {
+const handleState = (function() {
     let game = {
         score: 0,
         lives: 3,
@@ -15,9 +15,7 @@ const state = (function() {
         }
         return game;
     }
-    return {
-        handleState
-    };
+    return handleState;
 })();
 
 const score = document.querySelector(".score");
@@ -25,20 +23,20 @@ const lives = document.querySelector(".lives");
 const startButton = document.querySelector(".start");
 
 function updateScore() {
-    score.innerText = String(state.handleState().score).padStart(3, "0");
+    score.innerText = String(handleState().score).padStart(3, "0");
 }
 
 function updateLives() {
-    lives.innerText = String(state.handleState().lives);
+    lives.innerText = String(handleState().lives);
 }
 
 function getSequence() {
-    const { sequence } = state.handleState();
+    const { sequence } = handleState();
     return sequence;
 }
 
 function getUserInput() {
-    const { userInput } = state.handleState();
+    const { userInput } = handleState();
     return userInput;
 }
 
@@ -49,14 +47,14 @@ function getUserInput() {
  * @param {string} color - button color
  */
 function userInput(color) {
-    const { userInput } = state.handleState();
-    state.handleState({ userInput: [...userInput, color] });
+    const { userInput } = handleState();
+    handleState({ userInput: [...userInput, color] });
 }
 
 function oneUp() {
-    const { score, seqLength } = state.handleState();
+    const { score, seqLength } = handleState();
 
-    state.handleState({
+    handleState({
         score: score + seqLength,
         seqLength: seqLength + 1,
         sequence: [],
@@ -64,14 +62,14 @@ function oneUp() {
     });
     updateScore();
     setTimeout(() => {
-        state.handleState({ sequence: playSequence(seqLength + 1) });
+        handleState({ sequence: playSequence(seqLength + 1) });
     }, 500);
 }
 
 function loseALife() {
-    const { lives, score } = state.handleState();
+    const { lives, score } = handleState();
 
-    state.handleState({
+    handleState({
         seqLength: 3,
         lives: lives - 1,
         sequence: [],
@@ -80,17 +78,17 @@ function loseALife() {
     updateLives();
     if (lives - 1 <= 0) {
         endGame(score);
-        state.handleState({ score: 0, lives: 3 });
+        handleState({ score: 0, lives: 3 });
         updateScore();
         updateLives();
     }
 }
 
 function startGame() {
-    const { seqLength } = state.handleState();
+    const { seqLength } = handleState();
     startButton.style.visibility = "hidden";
     setTimeout(() => {
-        state.handleState({ sequence: playSequence(seqLength) });
+        handleState({ sequence: playSequence(seqLength) });
     }, 500);
 }
 
