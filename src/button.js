@@ -1,11 +1,11 @@
 import "./main.css";
 import index from "./index.js";
 
-const { getUserInput, getSequence, handleClick, loseALife, oneUp } = index;
+const { handleState, loseALife, oneUp } = index;
 
 const check = function(i) {
-    const input = getUserInput();
-    const sequence = getSequence();
+    const input = handleState().userInput;
+    const sequence = handleState().sequence;
     if (input[i] === sequence[i]) {
         rightOne();
         if (input.length === sequence.length) {
@@ -21,7 +21,6 @@ const check = function(i) {
 };
 
 const scorePanel = document.querySelector(".score-panel");
-const startButton = document.querySelector(".start");
 const buttonsDiv = document.getElementById("buttons");
 const body = document.querySelector("body");
 
@@ -33,6 +32,7 @@ function renderBackground(node, color, time, orgColor = "rgb(255,255,255)") {
 }
 
 function wrongOne() {
+    const startButton = document.querySelector(".start");
     renderBackground(body, "red", 150);
     startButton.style.visibility = "visible";
 }
@@ -51,8 +51,8 @@ function changeButtonColour(e) {
         if (body.style.backgroundColor === "whitesmoke") {
             let orgColor = e.target.classList[1];
             renderBackground(e.target, "rgb(255,255,255)", 150, orgColor);
-            handleClick(orgColor);
-            check(getUserInput().length - 1);
+            handleState({ userInput: [...handleState().userInput, orgColor] });
+            check(handleState().userInput.length - 1);
         }
     }
 }

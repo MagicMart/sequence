@@ -17,37 +17,14 @@ const handleState = (function() {
     };
 })();
 
-const score = document.querySelector(".score");
-const lives = document.querySelector(".lives");
-const startButton = document.querySelector(".start");
-
 function updateScore() {
-    score.innerText = String(handleState().score).padStart(3, "0");
+    const scoreEl = document.querySelector(".score");
+    scoreEl.innerText = String(handleState().score).padStart(3, "0");
 }
 
 function updateLives() {
-    lives.innerText = String(handleState().lives);
-}
-
-function getSequence() {
-    const { sequence } = handleState();
-    return sequence;
-}
-
-function getUserInput() {
-    const { userInput } = handleState();
-    return userInput;
-}
-
-/**
- * When a button is clicked,
- * its color is added to the array,
- * state.userInput
- * @param {string} color - button color
- */
-function handleClick(color) {
-    const { userInput } = handleState();
-    handleState({ userInput: [...userInput, color] });
+    const livesEl = document.querySelector(".lives");
+    livesEl.innerText = String(handleState().lives);
 }
 
 function oneUp() {
@@ -85,18 +62,16 @@ function loseALife() {
 
 function startGame() {
     const { seqLength } = handleState();
-    startButton.style.visibility = "hidden";
+    document.querySelector(".start").style.visibility = "hidden";
     setTimeout(() => {
         handleState({ sequence: playSequence(seqLength) });
     }, 500);
 }
 
-startButton.addEventListener("click", startGame);
+document.querySelector(".start").addEventListener("click", startGame);
 
 export default Object.freeze({
-    getSequence,
-    getUserInput,
-    handleClick,
+    handleState,
     oneUp,
     loseALife
 });
