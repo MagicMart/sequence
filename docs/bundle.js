@@ -167,14 +167,6 @@ var endGame = function endGame(score) {
 
 /* harmony default export */ var endgame = (endGame);
 // CONCATENATED MODULE: ./src/index.js
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
 
 
 
@@ -195,52 +187,20 @@ var handleState = function () {
   };
 }();
 
-var src_score = document.querySelector(".score");
-var src_lives = document.querySelector(".lives");
-var startButton = document.querySelector(".start");
-
-function updateScore() {
-  src_score.innerText = String(handleState().score).padStart(3, "0");
+function scoreDisplay(num) {
+  var scoreEl = document.querySelector(".score");
+  scoreEl.innerText = String(num).padStart(3, "0");
 }
 
-function updateLives() {
-  src_lives.innerText = String(handleState().lives);
-}
-
-function getSequence() {
-  var _handleState = handleState(),
-      sequence = _handleState.sequence;
-
-  return sequence;
-}
-
-function getUserInput() {
-  var _handleState2 = handleState(),
-      userInput = _handleState2.userInput;
-
-  return userInput;
-}
-/**
- * When a button is clicked,
- * its color is added to the array,
- * state.userInput
- * @param {string} color - button color
- */
-
-
-function handleClick(color) {
-  var _handleState3 = handleState(),
-      userInput = _handleState3.userInput;
-
-  handleState({
-    userInput: _toConsumableArray(userInput).concat([color])
-  });
+function livesDisplay(num) {
+  var livesEl = document.querySelector(".lives");
+  livesEl.innerText = String(num);
 }
 
 function oneUp() {
-  var _handleState4 = handleState(),
-      score = _handleState4.score,
-      seqLength = _handleState4.seqLength;
+  var _handleState = handleState(),
+      score = _handleState.score,
+      seqLength = _handleState.seqLength;
 
   handleState({
     score: score + seqLength,
@@ -248,7 +208,7 @@ function oneUp() {
     sequence: [],
     userInput: []
   });
-  updateScore();
+  scoreDisplay(score + seqLength);
   setTimeout(function () {
     handleState({
       sequence: src_sequence(seqLength + 1)
@@ -257,9 +217,9 @@ function oneUp() {
 }
 
 function loseALife() {
-  var _handleState5 = handleState(),
-      lives = _handleState5.lives,
-      score = _handleState5.score;
+  var _handleState2 = handleState(),
+      lives = _handleState2.lives,
+      score = _handleState2.score;
 
   handleState({
     seqLength: 3,
@@ -267,7 +227,7 @@ function loseALife() {
     sequence: [],
     userInput: []
   });
-  updateLives();
+  livesDisplay(lives - 1);
 
   if (lives - 1 <= 0) {
     endgame(score);
@@ -275,16 +235,16 @@ function loseALife() {
       score: 0,
       lives: 3
     });
-    updateScore();
-    updateLives();
+    scoreDisplay(0);
+    livesDisplay(3);
   }
 }
 
 function startGame() {
-  var _handleState6 = handleState(),
-      seqLength = _handleState6.seqLength;
+  var _handleState3 = handleState(),
+      seqLength = _handleState3.seqLength;
 
-  startButton.style.visibility = "hidden";
+  document.querySelector(".start").style.visibility = "hidden";
   setTimeout(function () {
     handleState({
       sequence: src_sequence(seqLength)
@@ -292,26 +252,30 @@ function startGame() {
   }, 500);
 }
 
-startButton.addEventListener("click", startGame);
+document.querySelector(".start").addEventListener("click", startGame);
 /* harmony default export */ var src = (Object.freeze({
-  getSequence: getSequence,
-  getUserInput: getUserInput,
-  handleClick: handleClick,
+  handleState: handleState,
   oneUp: oneUp,
   loseALife: loseALife
 }));
 // CONCATENATED MODULE: ./src/button.js
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 
-var button_getUserInput = src.getUserInput,
-    button_getSequence = src.getSequence,
-    button_handleClick = src.handleClick,
+
+var button_handleState = src.handleState,
     button_loseALife = src.loseALife,
     button_oneUp = src.oneUp;
 
 var check = function check(i) {
-  var input = button_getUserInput();
-  var sequence = button_getSequence();
+  var input = button_handleState().userInput;
+  var sequence = button_handleState().sequence;
 
   if (input[i] === sequence[i]) {
     rightOne();
@@ -329,7 +293,6 @@ var check = function check(i) {
 };
 
 var button_scorePanel = document.querySelector(".score-panel");
-var button_startButton = document.querySelector(".start");
 var buttonsDiv = document.getElementById("buttons");
 var button_body = document.querySelector("body");
 
@@ -342,8 +305,9 @@ function renderBackground(node, color, time) {
 }
 
 function wrongOne() {
+  var startButton = document.querySelector(".start");
   renderBackground(button_body, "red", 150);
-  button_startButton.style.visibility = "visible";
+  startButton.style.visibility = "visible";
 }
 
 function rightOne() {
@@ -361,8 +325,10 @@ function changeButtonColour(e) {
     if (_body.style.backgroundColor === "whitesmoke") {
       var orgColor = e.target.classList[1];
       renderBackground(e.target, "rgb(255,255,255)", 150, orgColor);
-      button_handleClick(orgColor);
-      check(button_getUserInput().length - 1);
+      button_handleState({
+        userInput: _toConsumableArray(button_handleState().userInput).concat([orgColor])
+      });
+      check(button_handleState().userInput.length - 1);
     }
   }
 }
