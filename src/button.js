@@ -18,6 +18,7 @@ function renderBackground(node, color, time, orgColor = "rgb(255,255,255)") {
 
 function wrongOne() {
     const startButton = document.querySelector(".start");
+
     renderBackground(body, "red", 150);
     startButton.style.visibility = "visible";
 }
@@ -32,15 +33,14 @@ function celebrate() {
 
 function handleButtonClick(e) {
     if (e.target && e.target.classList.contains("button")) {
-        const body = document.querySelector("body");
         if (body.style.backgroundColor === "whitesmoke") {
             let orgColor = e.target.classList[1];
             renderBackground(e.target, "rgb(255,255,255)", 150, orgColor);
             handleState({ userInput: [...handleState().userInput, orgColor] });
             // Check
             const { userInput, sequence } = handleState();
-            const index = userInput.length - 1;
-            if (userInput[index] === sequence[index]) {
+            const i = userInput.length - 1;
+            if (userInput[i] === sequence[i]) {
                 rightOne();
                 if (userInput.length === sequence.length) {
                     celebrate();
