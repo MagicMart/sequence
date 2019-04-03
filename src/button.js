@@ -25,10 +25,12 @@ const buttonsDiv = document.getElementById("buttons");
 const body = document.querySelector("body");
 
 function renderBackground(node, color, time, orgColor = "rgb(255,255,255)") {
-    node.style.backgroundColor = color;
     setTimeout(() => {
-        node.style.backgroundColor = orgColor;
-    }, time);
+        node.style.backgroundColor = color;
+        setTimeout(() => {
+            node.style.backgroundColor = orgColor;
+        }, time);
+    }, 0);
 }
 
 function wrongOne() {
