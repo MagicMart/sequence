@@ -51,12 +51,13 @@ function loseALife() {
         sequence: [],
         userInput: []
     });
-    livesDisplay(lives - 1);
     if (lives - 1 <= 0) {
         endGame(score);
         handleState({ score: 0, lives: 3 });
         scoreDisplay(0);
         livesDisplay(3);
+    } else {
+        livesDisplay(lives - 1);
     }
 }
 
