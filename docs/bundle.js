@@ -119,12 +119,12 @@ function clickSimulator(el) {
   setTimeout(function () {
     node.style.cssText = "background-color: white;border: 10px solid ".concat(orginalColor);
     scorePanel.style.backgroundColor = orginalColor;
+    setTimeout(function () {
+      node.style.backgroundColor = orginalColor;
+      scorePanel.style.backgroundColor = "white";
+      node.style.cssText = "border: 10px solid black";
+    }, 300);
   }, 0);
-  setTimeout(function () {
-    node.style.backgroundColor = orginalColor;
-    scorePanel.style.backgroundColor = "white";
-    node.style.cssText = "border: 10px solid black";
-  }, 300);
 }
 
 function playSequence(num) {
@@ -227,7 +227,6 @@ function loseALife() {
     sequence: [],
     userInput: []
   });
-  livesDisplay(lives - 1);
 
   if (lives - 1 <= 0) {
     endgame(score);
@@ -237,6 +236,8 @@ function loseALife() {
     });
     scoreDisplay(0);
     livesDisplay(3);
+  } else {
+    livesDisplay(lives - 1);
   }
 }
 
@@ -272,36 +273,18 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 var button_handleState = src.handleState,
     button_loseALife = src.loseALife,
     button_oneUp = src.oneUp;
-
-var check = function check(i) {
-  var input = button_handleState().userInput;
-  var sequence = button_handleState().sequence;
-
-  if (input[i] === sequence[i]) {
-    rightOne();
-
-    if (input.length === sequence.length) {
-      celebrate();
-      button_oneUp();
-    } else {
-      return;
-    }
-  } else {
-    wrongOne();
-    button_loseALife();
-  }
-};
-
 var button_scorePanel = document.querySelector(".score-panel");
 var buttonsDiv = document.getElementById("buttons");
 var button_body = document.querySelector("body");
 
 function renderBackground(node, color, time) {
   var orgColor = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "rgb(255,255,255)";
-  node.style.backgroundColor = color;
   setTimeout(function () {
-    node.style.backgroundColor = orgColor;
-  }, time);
+    node.style.backgroundColor = color;
+    setTimeout(function () {
+      node.style.backgroundColor = orgColor;
+    }, time);
+  }, 0);
 }
 
 function wrongOne() {
@@ -318,23 +301,38 @@ function celebrate() {
   renderBackground(button_body, "rgb(153, 255, 102)", 150);
 }
 
-function changeButtonColour(e) {
+function handleButtonClick(e) {
   if (e.target && e.target.classList.contains("button")) {
-    var _body = document.querySelector("body");
-
-    if (_body.style.backgroundColor === "whitesmoke") {
+    if (button_body.style.backgroundColor === "whitesmoke") {
       var orgColor = e.target.classList[1];
       renderBackground(e.target, "rgb(255,255,255)", 150, orgColor);
       button_handleState({
         userInput: _toConsumableArray(button_handleState().userInput).concat([orgColor])
-      });
-      check(button_handleState().userInput.length - 1);
+      }); // Check
+
+      var _handleState = button_handleState(),
+          userInput = _handleState.userInput,
+          sequence = _handleState.sequence;
+
+      var i = userInput.length - 1;
+
+      if (userInput[i] === sequence[i]) {
+        rightOne();
+
+        if (userInput.length === sequence.length) {
+          celebrate();
+          button_oneUp();
+        }
+      } else {
+        wrongOne();
+        button_loseALife();
+      }
     }
   }
 }
 
 buttonsDiv.addEventListener("click", function (e) {
-  return changeButtonColour(e);
+  return handleButtonClick(e);
 });
 
 /***/ })
