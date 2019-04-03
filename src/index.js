@@ -17,14 +17,14 @@ const handleState = (function() {
     };
 })();
 
-function updateScore() {
+function scoreDisplay(num) {
     const scoreEl = document.querySelector(".score");
-    scoreEl.innerText = String(handleState().score).padStart(3, "0");
+    scoreEl.innerText = String(num).padStart(3, "0");
 }
 
-function updateLives() {
+function livesDisplay(num) {
     const livesEl = document.querySelector(".lives");
-    livesEl.innerText = String(handleState().lives);
+    livesEl.innerText = String(num);
 }
 
 function oneUp() {
@@ -36,7 +36,7 @@ function oneUp() {
         sequence: [],
         userInput: []
     });
-    updateScore();
+    scoreDisplay(score + seqLength);
     setTimeout(() => {
         handleState({ sequence: playSequence(seqLength + 1) });
     }, 500);
@@ -51,12 +51,12 @@ function loseALife() {
         sequence: [],
         userInput: []
     });
-    updateLives();
+    livesDisplay(lives - 1);
     if (lives - 1 <= 0) {
         endGame(score);
         handleState({ score: 0, lives: 3 });
-        updateScore();
-        updateLives();
+        scoreDisplay(0);
+        livesDisplay(3);
     }
 }
 
