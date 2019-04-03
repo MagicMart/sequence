@@ -17,12 +17,12 @@ function clickSimulator(el) {
     setTimeout(() => {
         node.style.cssText = `background-color: white;border: 10px solid ${orginalColor}`;
         scorePanel.style.backgroundColor = orginalColor;
+        setTimeout(() => {
+            node.style.backgroundColor = orginalColor;
+            scorePanel.style.backgroundColor = "white";
+            node.style.cssText = "border: 10px solid black";
+        }, 300);
     }, 0);
-    setTimeout(() => {
-        node.style.backgroundColor = orginalColor;
-        scorePanel.style.backgroundColor = "white";
-        node.style.cssText = "border: 10px solid black";
-    }, 300);
 }
 
 function playSequence(num) {
