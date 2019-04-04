@@ -66,10 +66,15 @@ function startGame() {
     document.querySelector(".start").style.visibility = "hidden";
     setTimeout(() => {
         handleState({ sequence: playSequence(seqLength) });
+        document
+            .querySelector(".start")
+            .addEventListener("click", startGame, { once: true });
     }, 500);
 }
 
-document.querySelector(".start").addEventListener("click", startGame);
+document
+    .querySelector(".start")
+    .addEventListener("click", startGame, { once: true });
 
 export default Object.freeze({
     handleState,
