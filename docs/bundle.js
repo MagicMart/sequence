@@ -178,11 +178,9 @@ var handleState = function () {
     seqLength: 3,
     userInput: []
   };
-  return function (obj) {
-    if (obj !== undefined) {
-      game = Object.assign(game, obj);
-    }
-
+  return function () {
+    var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    game = Object.assign(game, obj);
     return game;
   };
 }();
@@ -250,10 +248,15 @@ function startGame() {
     handleState({
       sequence: src_sequence(seqLength)
     });
+    document.querySelector(".start").addEventListener("click", startGame, {
+      once: true
+    });
   }, 500);
 }
 
-document.querySelector(".start").addEventListener("click", startGame);
+document.querySelector(".start").addEventListener("click", startGame, {
+  once: true
+});
 /* harmony default export */ var src = (Object.freeze({
   handleState: handleState,
   oneUp: oneUp,
