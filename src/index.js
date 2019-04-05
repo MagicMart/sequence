@@ -9,10 +9,8 @@ const handleState = (function() {
         seqLength: 3,
         userInput: []
     };
-    return function(obj) {
-        if (obj !== undefined) {
-            game = Object.assign(game, obj);
-        }
+    return function(obj = {}) {
+        game = Object.assign(game, obj);
         return game;
     };
 })();
