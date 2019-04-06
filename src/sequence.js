@@ -14,14 +14,15 @@ function clickSimulator(el) {
     sequenceArray.push(el);
     let orginalColor = el;
     let node = document.querySelector(`.${el}`);
-
-    node.style.cssText = `background-color: white;border: 10px solid ${orginalColor}`;
     scorePanel.style.backgroundColor = orginalColor;
 
     let start = null;
     requestAnimationFrame(function change(timestamp) {
         if (!start) {
             start = timestamp;
+            node.style.cssText = `background-color: white;border: 10px solid ${orginalColor}`;
+            node.style.boxShadow = "0 5px #666";
+            node.style.transform = "translateY(4px)";
         }
         if (timestamp - start >= 300) {
             node.style.backgroundColor = orginalColor;

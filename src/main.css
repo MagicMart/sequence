@@ -56,6 +56,11 @@ header {
     border: 10px solid black;
     margin: 5px;
     border-radius: 50%;
+    box-shadow: 0 9px #999;
+}
+.button:active {
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
 }
 
 .red {
