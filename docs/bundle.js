@@ -116,12 +116,14 @@ function clickSimulator(el) {
   sequenceArray.push(el);
   var orginalColor = el;
   var node = document.querySelector(".".concat(el));
-  node.style.cssText = "background-color: white;border: 10px solid ".concat(orginalColor);
   scorePanel.style.backgroundColor = orginalColor;
   var start = null;
   requestAnimationFrame(function change(timestamp) {
     if (!start) {
       start = timestamp;
+      node.style.cssText = "background-color: white;border: 10px solid ".concat(orginalColor);
+      node.style.boxShadow = "0 5px #666";
+      node.style.transform = "translateY(4px)";
     }
 
     if (timestamp - start >= 300) {
