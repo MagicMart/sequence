@@ -116,15 +116,22 @@ function clickSimulator(el) {
   sequenceArray.push(el);
   var orginalColor = el;
   var node = document.querySelector(".".concat(el));
-  setTimeout(function () {
-    node.style.cssText = "background-color: white;border: 10px solid ".concat(orginalColor);
-    scorePanel.style.backgroundColor = orginalColor;
-    setTimeout(function () {
+  node.style.cssText = "background-color: white;border: 10px solid ".concat(orginalColor);
+  scorePanel.style.backgroundColor = orginalColor;
+  var start = null;
+  requestAnimationFrame(function change(timestamp) {
+    if (!start) {
+      start = timestamp;
+    }
+
+    if (timestamp - start >= 300) {
       node.style.backgroundColor = orginalColor;
       scorePanel.style.backgroundColor = "white";
       node.style.cssText = "border: 10px solid black";
-    }, 300);
-  }, 0);
+    } else {
+      requestAnimationFrame(change);
+    }
+  });
 }
 
 function playSequence(num) {
@@ -282,12 +289,19 @@ var button_body = document.querySelector("body");
 
 function renderBackground(node, color, time) {
   var orgColor = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "rgb(255,255,255)";
-  setTimeout(function () {
-    node.style.backgroundColor = color;
-    setTimeout(function () {
+  node.style.backgroundColor = color;
+  var start = null;
+  requestAnimationFrame(function change(timestamp) {
+    if (!start) {
+      start = timestamp;
+    }
+
+    if (timestamp - start >= time) {
       node.style.backgroundColor = orgColor;
-    }, time);
-  }, 0);
+    } else {
+      requestAnimationFrame(change);
+    }
+  });
 }
 
 function wrongOne() {
