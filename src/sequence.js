@@ -14,15 +14,23 @@ function clickSimulator(el) {
     sequenceArray.push(el);
     let orginalColor = el;
     let node = document.querySelector(`.${el}`);
-    setTimeout(() => {
-        node.style.cssText = `background-color: white;border: 10px solid ${orginalColor}`;
-        scorePanel.style.backgroundColor = orginalColor;
-        setTimeout(() => {
+
+    node.style.cssText = `background-color: white;border: 10px solid ${orginalColor}`;
+    scorePanel.style.backgroundColor = orginalColor;
+
+    let start = null;
+    requestAnimationFrame(function change(timestamp) {
+        if (!start) {
+            start = timestamp;
+        }
+        if (timestamp - start >= 300) {
             node.style.backgroundColor = orginalColor;
             scorePanel.style.backgroundColor = "white";
             node.style.cssText = "border: 10px solid black";
-        }, 300);
-    }, 0);
+        } else {
+            requestAnimationFrame(change);
+        }
+    });
 }
 
 function playSequence(num) {
