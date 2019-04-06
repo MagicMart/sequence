@@ -8,12 +8,18 @@ const buttonsDiv = document.getElementById("buttons");
 const body = document.querySelector("body");
 
 function renderBackground(node, color, time, orgColor = "rgb(255,255,255)") {
-    setTimeout(() => {
-        node.style.backgroundColor = color;
-        setTimeout(() => {
+    node.style.backgroundColor = color;
+    let start = null;
+    requestAnimationFrame(function change(timestamp) {
+        if (!start) {
+            start = timestamp;
+        }
+        if (timestamp - start >= time) {
             node.style.backgroundColor = orgColor;
-        }, time);
-    }, 0);
+        } else {
+            requestAnimationFrame(change);
+        }
+    });
 }
 
 function wrongOne() {
