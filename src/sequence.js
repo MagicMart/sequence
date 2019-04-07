@@ -24,7 +24,7 @@ function playSequence(num, cb) {
                 start = timestamp;
             }
             progress = timestamp - start;
-            if (progress > 400) {
+            if (progress > 500) {
                 scorePanel.style.backgroundColor = arr[i];
                 node.style.cssText = `background-color: white;border: 10px solid ${
                     arr[i]
@@ -44,9 +44,9 @@ function playSequence(num, cb) {
             if (i < arr.length) {
                 requestAnimationFrame(change);
             } else {
-                cb(sequence);
                 setTimeout(() => {
                     body.style.backgroundColor = "whitesmoke";
+                    cb(sequence);
                 }, 300);
             }
         });
