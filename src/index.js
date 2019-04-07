@@ -1,4 +1,4 @@
-import playSequence from "./sequence.js";
+import playSequence from "./sequence";
 import endGame from "./endgame.js";
 
 const handleState = (function() {
@@ -36,7 +36,7 @@ function oneUp() {
     });
     scoreDisplay(score + seqLength);
     setTimeout(() => {
-        handleState({ sequence: playSequence(seqLength + 1) });
+        playSequence(seqLength + 1, arr => handleState({ sequence: arr }));
     }, 500);
 }
 
@@ -63,7 +63,7 @@ function startGame() {
     const { seqLength } = handleState();
     document.querySelector(".start").style.visibility = "hidden";
     setTimeout(() => {
-        handleState({ sequence: playSequence(seqLength) });
+        playSequence(seqLength, arr => handleState({ sequence: arr }));
         document
             .querySelector(".start")
             .addEventListener("click", startGame, { once: true });
