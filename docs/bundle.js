@@ -101,66 +101,68 @@ __webpack_require__.r(__webpack_exports__);
 var main = __webpack_require__(0);
 
 // CONCATENATED MODULE: ./src/sequence.js
-var body = document.querySelector("body");
-var scorePanel = document.querySelector(".score-panel");
-var sequenceLength;
-var sequenceArray;
-var timerId;
+function playSequence(num, cb) {
+  function randomColor() {
+    var col = ["red", "green", "blue", "gold"];
+    return col[Math.floor(Math.random() * 4)];
+  }
 
-function randomColor() {
-  var colors = ["blue", "green", "gold", "red"];
-  return colors[Math.floor(Math.random() * 4)];
-}
+  function randColorArr(size, fn) {
+    return new Array(size).fill().map(function () {
+      return fn();
+    });
+  }
 
-function clickSimulator(el) {
-  sequenceArray.push(el);
-  var orginalColor = el;
-  var node = document.querySelector(".".concat(el));
-  scorePanel.style.backgroundColor = orginalColor;
-  var start = null;
-  requestAnimationFrame(function change(timestamp) {
-    if (!start) {
-      start = timestamp;
-      node.style.cssText = "background-color: white;border: 10px solid ".concat(orginalColor);
-      node.style.boxShadow = "0 5px #666";
-      node.style.transform = "translateY(4px)";
-    }
+  var sequence = randColorArr(num, randomColor);
 
-    if (timestamp - start >= 300) {
-      node.style.backgroundColor = orginalColor;
-      scorePanel.style.backgroundColor = "white";
-      node.style.cssText = "border: 10px solid black";
-    } else {
-      requestAnimationFrame(change);
-    }
-  });
-}
-
-function playSequence(num) {
-  sequenceLength = num;
-  sequenceArray = [];
-  timerId = setInterval(sequence, 800);
-  return sequenceArray;
-}
-
-function sequence() {
-  if (sequenceArray.length === 0) {
+  function spit(arr) {
+    var body = document.querySelector("body");
     body.style.backgroundColor = "rgba(120,120,120)";
+    var scorePanel = document.querySelector(".score-panel");
+    var start = null;
+    var progress;
+    var i = 0;
+    var node;
+    requestAnimationFrame(function change(timestamp) {
+      node = document.querySelector(".".concat(arr[i]));
+
+      if (!start) {
+        start = timestamp;
+      }
+
+      progress = timestamp - start;
+
+      if (progress > 400) {
+        scorePanel.style.backgroundColor = arr[i];
+        node.style.cssText = "background-color: white;border: 10px solid ".concat(arr[i]);
+        node.style.boxShadow = "0 5px #666";
+        node.style.transform = "translateY(4px)";
+      }
+
+      if (progress > 800) {
+        node.style.backgroundColor = arr[i];
+        scorePanel.style.backgroundColor = "white";
+        node.style.cssText = "border: 10px solid black";
+        i += 1;
+        progress = 0;
+        start = timestamp;
+      }
+
+      if (i < arr.length) {
+        requestAnimationFrame(change);
+      } else {
+        cb(sequence);
+        setTimeout(function () {
+          body.style.backgroundColor = "whitesmoke";
+        }, 300);
+      }
+    });
   }
 
-  sequenceLength -= 1;
-  clickSimulator(randomColor());
-
-  if (sequenceLength === 0) {
-    clearInterval(timerId);
-    setTimeout(function () {
-      body.style.backgroundColor = "whitesmoke";
-    }, 300);
-    return;
-  }
+  spit(sequence);
 }
 
-/* harmony default export */ var src_sequence = (playSequence);
+/* harmony default export */ var sequence = (playSequence);
 // CONCATENATED MODULE: ./src/endgame.js
 var id01 = document.getElementById("id01");
 var modalScore = document.getElementById("modal-score");
@@ -217,8 +219,10 @@ function oneUp() {
   });
   scoreDisplay(score + seqLength);
   setTimeout(function () {
-    handleState({
-      sequence: src_sequence(seqLength + 1)
+    sequence(seqLength + 1, function (arr) {
+      return handleState({
+        sequence: arr
+      });
     });
   }, 500);
 }
@@ -254,8 +258,10 @@ function startGame() {
 
   document.querySelector(".start").style.visibility = "hidden";
   setTimeout(function () {
-    handleState({
-      sequence: src_sequence(seqLength)
+    sequence(seqLength, function (arr) {
+      return handleState({
+        sequence: arr
+      });
     });
     document.querySelector(".start").addEventListener("click", startGame, {
       once: true
@@ -285,9 +291,9 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 var button_handleState = src.handleState,
     button_loseALife = src.loseALife,
     button_oneUp = src.oneUp;
-var button_scorePanel = document.querySelector(".score-panel");
+var scorePanel = document.querySelector(".score-panel");
 var buttonsDiv = document.getElementById("buttons");
-var button_body = document.querySelector("body");
+var body = document.querySelector("body");
 
 function renderBackground(node, color, time) {
   var orgColor = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "rgb(255,255,255)";
@@ -308,21 +314,21 @@ function renderBackground(node, color, time) {
 
 function wrongOne() {
   var startButton = document.querySelector(".start");
-  renderBackground(button_body, "red", 150);
+  renderBackground(body, "red", 150);
   startButton.style.visibility = "visible";
 }
 
 function rightOne() {
-  renderBackground(button_scorePanel, "rgb(153, 255, 102)", 150);
+  renderBackground(scorePanel, "rgb(153, 255, 102)", 150);
 }
 
 function celebrate() {
-  renderBackground(button_body, "rgb(153, 255, 102)", 150);
+  renderBackground(body, "rgb(153, 255, 102)", 150);
 }
 
 function handleButtonClick(e) {
   if (e.target && e.target.classList.contains("button")) {
-    if (button_body.style.backgroundColor === "whitesmoke") {
+    if (body.style.backgroundColor === "whitesmoke") {
       var orgColor = e.target.classList[1];
       renderBackground(e.target, "rgb(255,255,255)", 150, orgColor);
       button_handleState({
