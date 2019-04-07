@@ -39,7 +39,7 @@ function celebrate() {
 
 function handleButtonClick(e) {
     if (e.target && e.target.classList.contains("button")) {
-        if (body.style.backgroundColor === "whitesmoke") {
+        if (handleState().sequence.length !== 0) {
             let orgColor = e.target.classList[1];
             renderBackground(e.target, "rgb(255,255,255)", 150, orgColor);
             handleState({ userInput: [...handleState().userInput, orgColor] });
