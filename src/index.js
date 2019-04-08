@@ -25,7 +25,7 @@ function livesDisplay(num) {
     livesEl.innerText = String(num);
 }
 
-function oneUp() {
+function scoreInc() {
     const { score, seqLength } = handleState();
 
     handleState({
@@ -76,6 +76,6 @@ document
 
 export default Object.freeze({
     handleState,
-    oneUp,
+    oneUp: scoreInc,
     loseALife
 });

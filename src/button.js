@@ -1,7 +1,7 @@
 import "./main.css";
 import index from "./index.js";
 
-const { handleState, loseALife, oneUp } = index;
+const { handleState, loseALife, oneUp: scoreInc } = index;
 
 const scorePanel = document.querySelector(".score-panel");
 const buttonsDiv = document.getElementById("buttons");
@@ -50,7 +50,7 @@ function handleButtonClick(e) {
                 rightOne();
                 if (userInput.length === sequence.length) {
                     celebrate();
-                    oneUp();
+                    scoreInc();
                 }
             } else {
                 wrongOne();
