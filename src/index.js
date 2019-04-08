@@ -76,6 +76,6 @@ document
 
 export default Object.freeze({
     handleState,
-    oneUp: scoreInc,
+    scoreInc,
     loseALife
 });
