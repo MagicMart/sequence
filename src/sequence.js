@@ -4,10 +4,11 @@ function playSequence(num, cb) {
         return col[Math.floor(Math.random() * 4)];
     }
 
-    function randColorArr(size, fn) {
-        return new Array(size).fill().map(() => fn());
+    function makeArr(size) {
+        return new Array(size).fill();
     }
-    let sequence = randColorArr(num, randomColor);
+    const makeArrRandomColor = size => makeArr(size).map(() => randomColor());
+
     function spit(arr) {
         const body = document.querySelector("body");
         body.style.backgroundColor = "rgba(120,120,120)";
@@ -46,13 +47,13 @@ function playSequence(num, cb) {
             } else {
                 setTimeout(() => {
                     body.style.backgroundColor = "whitesmoke";
-                    cb(sequence);
+                    cb(arr);
                 }, 300);
             }
         });
     }
 
-    spit(sequence);
+    spit(makeArrRandomColor(num));
 }
 
 export default playSequence;

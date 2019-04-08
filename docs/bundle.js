@@ -107,13 +107,15 @@ function playSequence(num, cb) {
     return col[Math.floor(Math.random() * 4)];
   }
 
-  function randColorArr(size, fn) {
-    return new Array(size).fill().map(function () {
-      return fn();
-    });
+  function makeArr(size) {
+    return new Array(size).fill();
   }
 
-  var sequence = randColorArr(num, randomColor);
+  var makeArrRandomColor = function makeArrRandomColor(size) {
+    return makeArr(size).map(function () {
+      return randomColor();
+    });
+  };
 
   function spit(arr) {
     var body = document.querySelector("body");
@@ -132,7 +134,7 @@ function playSequence(num, cb) {
 
       progress = timestamp - start;
 
-      if (progress > 400) {
+      if (progress > 500) {
         scorePanel.style.backgroundColor = arr[i];
         node.style.cssText = "background-color: white;border: 10px solid ".concat(arr[i]);
         node.style.boxShadow = "0 5px #666";
@@ -151,15 +153,15 @@ function playSequence(num, cb) {
       if (i < arr.length) {
         requestAnimationFrame(change);
       } else {
-        cb(sequence);
         setTimeout(function () {
           body.style.backgroundColor = "whitesmoke";
+          cb(arr);
         }, 300);
       }
     });
   }
 
-  spit(sequence);
+  spit(makeArrRandomColor(num));
 }
 
 /* harmony default export */ var sequence = (playSequence);
@@ -328,7 +330,7 @@ function celebrate() {
 
 function handleButtonClick(e) {
   if (e.target && e.target.classList.contains("button")) {
-    if (body.style.backgroundColor === "whitesmoke") {
+    if (button_handleState().sequence.length !== 0) {
       var orgColor = e.target.classList[1];
       renderBackground(e.target, "rgb(255,255,255)", 150, orgColor);
       button_handleState({
