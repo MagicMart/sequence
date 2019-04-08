@@ -208,7 +208,7 @@ function livesDisplay(num) {
   livesEl.innerText = String(num);
 }
 
-function oneUp() {
+function scoreInc() {
   var _handleState = handleState(),
       score = _handleState.score,
       seqLength = _handleState.seqLength;
@@ -276,7 +276,7 @@ document.querySelector(".start").addEventListener("click", startGame, {
 });
 /* harmony default export */ var src = (Object.freeze({
   handleState: handleState,
-  oneUp: oneUp,
+  oneUp: scoreInc,
   loseALife: loseALife
 }));
 // CONCATENATED MODULE: ./src/button.js
@@ -292,7 +292,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 var button_handleState = src.handleState,
     button_loseALife = src.loseALife,
-    button_oneUp = src.oneUp;
+    button_scoreInc = src.oneUp;
 var scorePanel = document.querySelector(".score-panel");
 var buttonsDiv = document.getElementById("buttons");
 var body = document.querySelector("body");
@@ -348,7 +348,7 @@ function handleButtonClick(e) {
 
         if (userInput.length === sequence.length) {
           celebrate();
-          button_oneUp();
+          button_scoreInc();
         }
       } else {
         wrongOne();
