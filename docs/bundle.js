@@ -276,7 +276,7 @@ document.querySelector(".start").addEventListener("click", startGame, {
 });
 /* harmony default export */ var src = (Object.freeze({
   handleState: handleState,
-  oneUp: scoreInc,
+  scoreInc: scoreInc,
   loseALife: loseALife
 }));
 // CONCATENATED MODULE: ./src/button.js
@@ -292,7 +292,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 var button_handleState = src.handleState,
     button_loseALife = src.loseALife,
-    button_scoreInc = src.oneUp;
+    button_scoreInc = src.scoreInc;
 var scorePanel = document.querySelector(".score-panel");
 var buttonsDiv = document.getElementById("buttons");
 var body = document.querySelector("body");

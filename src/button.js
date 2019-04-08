@@ -1,7 +1,7 @@
 import "./main.css";
 import index from "./index.js";
 
-const { handleState, loseALife, oneUp: scoreInc } = index;
+const { handleState, loseALife, scoreInc } = index;
 
 const scorePanel = document.querySelector(".score-panel");
 const buttonsDiv = document.getElementById("buttons");
