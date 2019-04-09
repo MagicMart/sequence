@@ -1,6 +1,8 @@
 import "./main.css";
 import index from "./index.js";
 
+document.querySelector("body").style.visibility = "visible";
+
 const { handleState, loseALife, scoreInc } = index;
 
 const scorePanel = document.querySelector(".score-panel");
