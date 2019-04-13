@@ -4,8 +4,9 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 module.exports = {
     entry: "./src/button.js",
     output: {
-        path: path.resolve(__dirname, "docs"),
-        filename: "bundle.js"
+        path: path.resolve(__dirname, "build"),
+        filename: "bundle.js",
+        publicPath: "/sequence/"
     },
 
     module: {
